@@ -26,7 +26,13 @@
       font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       display:flex; flex-direction:column; align-items:center;
     }
-    .container{width:min(1100px,94vw); margin:0 auto}
+
+    /* Wider container + 4K friendly */
+    .container{width:min(1400px,96vw); margin:0 auto}
+    @media (min-width:1600px){
+      .container{ width:min(1700px,92vw) }
+    }
+
     header{width:100%}
     .header-inner{padding:18px 0; display:flex; align-items:center; justify-content:space-between}
     .brand{font-family:'Dancing Script',cursive; font-size:clamp(28px,4vw,42px); color:var(--ink)}
@@ -47,14 +53,21 @@
     .title{
       font-family:'Dancing Script',cursive;
       font-size:clamp(38px,5.4vw,64px); line-height:1.04; margin:.2rem 0;
-      color:var(--ink); /* keep solid color (no gradients) */
+      color:var(--ink);
+    }
+    @media (min-width:1600px){
+      .title{ font-size:clamp(52px,4.8vw,88px) }
     }
     .sub{color:var(--muted); margin:.3rem 0 1rem}
 
     .cta{display:flex; flex-wrap:wrap; gap:.8rem; align-items:center}
     .btn{appearance:none; border:0; border-radius:999px; padding:.9rem 1.2rem; font-weight:700;
       text-decoration:none; display:inline-flex; align-items:center; gap:.6rem; cursor:pointer;
-      box-shadow:0 10px 18px rgba(0,0,0,.14)}
+      box-shadow:0 10px 18px rgba(0,0,0,.14); transition:transform .08s ease, filter .15s ease}
+    .btn:active{ transform:translateY(1px) }
+    .btn:disabled{ filter:grayscale(.2); opacity:.85; cursor:not-allowed }
+    .btn.posting{ background:#6b7280 !important; color:#fff !important } /* slate */
+    .btn.success{ background:#22c55e !important; color:#fff !important } /* green */
     .btn-dark{background:#111; color:#fff}
     .btn-gold{background:var(--gold); color:#111}
     .btn-pink{background:var(--brand); color:#fff}
@@ -62,11 +75,13 @@
 
     .frame{border:1.5px solid var(--line); border-radius:12px; background:#fff; padding:12px; display:grid; gap:10px}
     .hero{border:1.5px solid var(--line); border-radius:10px; overflow:hidden; aspect-ratio:16 / 10}
+    @media (min-width:1600px){ .hero{ aspect-ratio:16 / 9 } } /* taller hero on 4K */
     .hero img{width:100%; height:100%; object-fit:cover; display:block}
     .thumbs{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
     .thumb{width:110px; height:70px; border-radius:8px; border:1.5px solid var(--line); overflow:hidden; cursor:pointer; background:#fff}
     .thumb img{width:100%; height:100%; object-fit:cover; display:block}
     .thumb[aria-current="true"]{outline:3px solid var(--brand)}
+    @media (min-width:1600px){ .thumb{ width:140px; height:88px } }
 
     .guest{margin:28px 0 54px}
     .hand{font-family:'Dancing Script',cursive; font-size:clamp(28px,4vw,44px)}
@@ -126,12 +141,14 @@
         </div>
 
         <aside class="frame" aria-label="Photo gallery">
-          <figure class="hero"><img id="hero" src="img/photo1.jpg" alt="Lixana photo" /></figure>
+          <figure class="hero">
+            <img id="hero" src="img/photo1.jpg" alt="Lixana photo" loading="eager" decoding="async" />
+          </figure>
           <div class="thumbs">
-            <button class="thumb" aria-current="true"><img src="img/photo1-thumb.jpg" alt="Photo 1" /></button>
-            <button class="thumb"><img src="img/photo2-thumb.jpg" alt="Photo 2" /></button>
-            <button class="thumb"><img src="img/photo3-thumb.jpg" alt="Photo 3" /></button>
-            <button class="thumb"><img src="img/photo4-thumb.jpg" alt="Photo 4" /></button>
+            <button class="thumb" aria-current="true"><img src="img/photo1-thumb.jpg" alt="Photo 1" loading="lazy" decoding="async" /></button>
+            <button class="thumb"><img src="img/photo2-thumb.jpg" alt="Photo 2" loading="lazy" decoding="async" /></button>
+            <button class="thumb"><img src="img/photo3-thumb.jpg" alt="Photo 3" loading="lazy" decoding="async" /></button>
+            <button class="thumb"><img src="img/photo4-thumb.jpg" alt="Photo 4" loading="lazy" decoding="async" /></button>
           </div>
         </aside>
       </section>
@@ -204,9 +221,9 @@
     closer && closer.addEventListener('click', () => overlay.removeAttribute('open'));
     overlay.addEventListener('click', e => { if (e.target === overlay) overlay.removeAttribute('open'); });
 
-    // --- Confetti (emoji, light) ---
+    // --- Confetti (emoji, light, deferred) ---
     const confetti = document.getElementById('confetti');
-    (function makeConfetti(){
+    function makeConfetti(){
       const emojis = ['🎉','🎊','✨','🎈'];
       for (let i=0; i<26; i++) {
         const s = document.createElement('span');
@@ -215,89 +232,109 @@
         s.style.setProperty('--d', (6 + Math.random()*9) + 's');
         confetti.appendChild(s);
       }
-    })();
+    }
+    (window.requestIdleCallback || window.setTimeout)(makeConfetti, 0);
   </script>
 
-  <!-- Shared guestbook using your Google Apps Script backend -->
+  <!-- Shared guestbook using your Google Apps Script backend (optimized) -->
   <script>
     // Your deployed Apps Script URL:
     const API_BASE = "https://script.google.com/macros/s/AKfycbzeQJ3gjjptsiYxNBTxlzruLfbjUmIQKvo4jNI5IYjYjhvh_ArK7KE0Ykb8NMVn9SRM/exec";
 
     const statusEl = document.getElementById('status');
-  const cardsEl  = document.getElementById('cards');
-  const form     = document.getElementById('form');
+    const cardsEl  = document.getElementById('cards');
+    const form     = document.getElementById('form');
 
-  function fmt(ts){ return new Date(ts).toLocaleString([], {dateStyle:'medium', timeStyle:'short'}); }
-  function sanitize(s){ return String(s||'').replace(/[<>]/g,''); }
-  function render(list){
-    list.sort((a,b)=>b.time-a.time);
-    cardsEl.innerHTML = list.length
-      ? list.map(m => `
-          <article class="gcard">
-            <h4>${sanitize(m.name) || 'Anonymous'}</h4>
-            <div class="when">${fmt(m.time)}${m.contact ? ' • ' + sanitize(m.contact) : ''}</div>
-            <p>${sanitize(m.text)}</p>
-          </article>
-        `).join('')
-      : '<div class="gcard">Be the first to leave a message! 🎉</div>';
-  }
+    function fmt(ts){ return new Date(ts).toLocaleString([], {dateStyle:'medium', timeStyle:'short'}); }
+    function sanitize(s){ return String(s||'').replace(/[<>]/g,''); }
+    function render(list){
+      list.sort((a,b)=>b.time-a.time);
+      cardsEl.innerHTML = list.length
+        ? list.map(m => `
+            <article class="gcard">
+              <h4>${sanitize(m.name) || 'Anonymous'}</h4>
+              <div class="when">${fmt(m.time)}${m.contact ? ' • ' + sanitize(m.contact) : ''}</div>
+              <p>${sanitize(m.text)}</p>
+            </article>
+          `).join('')
+        : '<div class="gcard">Be the first to leave a message! 🎉</div>';
+    }
 
-  async function fetchMessages(){
-    const url = API_BASE + '?ts=' + Date.now();          // bust caches
-    const r = await fetch(url, { cache:'no-store' });
-    if (!r.ok) throw new Error('HTTP '+r.status);
-    return (await r.json()) || [];
-  }
+    async function fetchMessages(){
+      const r = await fetch(API_BASE + '?ts=' + Date.now(), { cache:'no-store' });
+      if (!r.ok) throw new Error('HTTP '+r.status);
+      return (await r.json()) || [];
+    }
+    async function postMessage(entry){
+      const r = await fetch(API_BASE, {
+        method:'POST',
+        headers:{ 'Content-Type':'text/plain;charset=UTF-8' }, // avoids preflight
+        body: JSON.stringify(entry)
+      });
+      if (!r.ok) throw new Error('HTTP '+r.status);
+      return await r.json();
+    }
 
-  async function postMessage(entry){
-    // text/plain avoids OPTIONS preflight with Apps Script
-    const r = await fetch(API_BASE, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-      body: JSON.stringify(entry)
+    async function loadOnce(){
+      try {
+        statusEl.textContent = 'Loading messages…';
+        render(await fetchMessages());
+        statusEl.textContent = 'Live guestbook enabled via Google Sheet.';
+      } catch (e) {
+        console.error('Load failed:', e);
+        statusEl.textContent = 'Could not reach backend. Check API_BASE or deployment access.';
+      }
+    }
+    // Load ASAP, then lightly re-check after first paint for freshness.
+    loadOnce();
+    setTimeout(loadOnce, 600);
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = form.querySelector('button[type=submit]');
+      const originalText = submitBtn.textContent;
+
+      const entry = {
+        name: (form.elements['name']?.value || '').trim(),
+        contact: (form.elements['contact']?.value || '').trim(),
+        text: (form.elements['message']?.value || '').trim(),
+        time: Date.now(),
+      };
+      if (!entry.text) return;
+
+      // Visual feedback while posting
+      submitBtn.disabled = true;
+      submitBtn.classList.add('posting');
+      submitBtn.textContent = 'Posting…';
+
+      try {
+        await postMessage(entry);
+        // Give Sheets a beat, then refresh the list
+        await new Promise(r => setTimeout(r, 250));
+        render(await fetchMessages());
+
+        // Reset form & modal
+        form.reset();
+        document.getElementById('overlay').removeAttribute('open');
+        location.hash = '#guestbook';
+
+        // Success flash
+        submitBtn.classList.remove('posting');
+        submitBtn.classList.add('success');
+        submitBtn.textContent = 'Posted!';
+        setTimeout(() => {
+          submitBtn.classList.remove('success');
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }, 1100);
+      } catch (e) {
+        console.error('Post failed:', e);
+        alert('Sorry — could not send your message. Please try again.');
+        submitBtn.classList.remove('posting');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
     });
-    if (!r.ok) throw new Error('HTTP '+r.status);
-    return await r.json();
-  }
-
-  async function load(){
-    try {
-      statusEl.textContent = 'Loading messages…';
-      render(await fetchMessages());
-      statusEl.textContent = 'Live guestbook enabled via Google Sheet.';
-    } catch (e) {
-      console.error('Load failed:', e);
-      statusEl.textContent = 'Could not reach backend. Check API_BASE or deployment access.';
-    }
-  }
-  load();
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const entry = {
-      name: (form.elements['name']?.value || '').trim(),
-      contact: (form.elements['contact']?.value || '').trim(),
-      text: (form.elements['message']?.value || '').trim(),
-      time: Date.now(),
-    };
-    if (!entry.text) return;
-
-    const submitBtn = form.querySelector('button[type=submit]');
-    submitBtn.disabled = true;
-
-    try {
-      await postMessage(entry);
-      render(await fetchMessages());
-      form.reset();
-      document.getElementById('overlay').removeAttribute('open');
-      location.hash = '#guestbook';
-    } catch (e) {
-      console.error('Post failed:', e);
-      alert('Sorry — could not send your message. Make sure the backend URL/permissions are correct.');
-    } finally {
-      submitBtn.disabled = false;
-    }
-  });
-</script>
+  </script>
 </body>
 </html>
