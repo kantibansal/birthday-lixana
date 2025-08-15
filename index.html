@@ -221,80 +221,83 @@
   <!-- Shared guestbook using your Google Apps Script backend -->
   <script>
     // Your deployed Apps Script URL:
-    const API_BASE = "https://script.google.com/macros/s/AKfycbwoz5Tzt-ZzvIk8aJDn5hZXm0hE2PGfFcchUFygujBpDihAZb__O2PuD_KdKAcbKax4/exec";
+    const API_BASE = "https://script.google.com/macros/s/AKfycbzeQJ3gjjptsiYxNBTxlzruLfbjUmIQKvo4jNI5IYjYjhvh_ArK7KE0Ykb8NMVn9SRM/exec";
 
     const statusEl = document.getElementById('status');
-    const cardsEl  = document.getElementById('cards');
-    const form     = document.getElementById('form');
+  const cardsEl  = document.getElementById('cards');
+  const form     = document.getElementById('form');
 
-    function fmt(ts){ return new Date(ts).toLocaleString([], {dateStyle:'medium', timeStyle:'short'}); }
-    function sanitize(s){ return String(s||'').replace(/[<>]/g,''); }
-    function render(list){
-      list.sort((a,b)=>b.time-a.time);
-      cardsEl.innerHTML = list.length
-        ? list.map(m => `
-            <article class="gcard">
-              <h4>${sanitize(m.name) || 'Anonymous'}</h4>
-              <div class="when">${fmt(m.time)}${m.contact ? ' • ' + sanitize(m.contact) : ''}</div>
-              <p>${sanitize(m.text)}</p>
-            </article>
-          `).join('')
-        : '<div class="gcard">Be the first to leave a message! 🎉</div>';
-    }
+  function fmt(ts){ return new Date(ts).toLocaleString([], {dateStyle:'medium', timeStyle:'short'}); }
+  function sanitize(s){ return String(s||'').replace(/[<>]/g,''); }
+  function render(list){
+    list.sort((a,b)=>b.time-a.time);
+    cardsEl.innerHTML = list.length
+      ? list.map(m => `
+          <article class="gcard">
+            <h4>${sanitize(m.name) || 'Anonymous'}</h4>
+            <div class="when">${fmt(m.time)}${m.contact ? ' • ' + sanitize(m.contact) : ''}</div>
+            <p>${sanitize(m.text)}</p>
+          </article>
+        `).join('')
+      : '<div class="gcard">Be the first to leave a message! 🎉</div>';
+  }
 
-    async function fetchMessages(){
-      const r = await fetch(API_BASE, { cache:'no-store' }); // doGet
-      const data = await r.json();
-      return Array.isArray(data) ? data : [];
-    }
-    async function postMessage(entry){
-      const r = await fetch(API_BASE, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(entry)
-      });
-      if (!r.ok) throw new Error('Post failed');
-      return await r.json();
-    }
+  async function fetchMessages(){
+    const url = API_BASE + '?ts=' + Date.now();          // bust caches
+    const r = await fetch(url, { cache:'no-store' });
+    if (!r.ok) throw new Error('HTTP '+r.status);
+    return (await r.json()) || [];
+  }
 
-    async function load(){
-      try {
-        statusEl.textContent = 'Loading messages…';
-        render(await fetchMessages());
-        statusEl.textContent = 'Live guestbook enabled via Google Sheet.';
-      } catch (e) {
-        console.error(e);
-        statusEl.textContent = 'Could not reach backend. Check API_BASE or deployment access.';
-      }
-    }
-    load();
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const entry = {
-        name: (form.elements['name']?.value || '').trim(),
-        contact: (form.elements['contact']?.value || '').trim(),
-        text: (form.elements['message']?.value || '').trim(),
-        time: Date.now(),
-      };
-      if (!entry.text) return;
-
-      const submitBtn = form.querySelector('button[type=submit]');
-      submitBtn.disabled = true;
-
-      try {
-        await postMessage(entry);
-        render(await fetchMessages());
-        form.reset();
-        document.getElementById('overlay').removeAttribute('open');
-        location.hash = '#guestbook';
-      } catch (e) {
-        console.error(e);
-        alert('Sorry — could not send your message. Make sure the backend URL/permissions are correct.');
-      } finally {
-        submitBtn.disabled = false;
-      }
+  async function postMessage(entry){
+    // text/plain avoids OPTIONS preflight with Apps Script
+    const r = await fetch(API_BASE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body: JSON.stringify(entry)
     });
-  </script>
+    if (!r.ok) throw new Error('HTTP '+r.status);
+    return await r.json();
+  }
+
+  async function load(){
+    try {
+      statusEl.textContent = 'Loading messages…';
+      render(await fetchMessages());
+      statusEl.textContent = 'Live guestbook enabled via Google Sheet.';
+    } catch (e) {
+      console.error('Load failed:', e);
+      statusEl.textContent = 'Could not reach backend. Check API_BASE or deployment access.';
+    }
+  }
+  load();
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const entry = {
+      name: (form.elements['name']?.value || '').trim(),
+      contact: (form.elements['contact']?.value || '').trim(),
+      text: (form.elements['message']?.value || '').trim(),
+      time: Date.now(),
+    };
+    if (!entry.text) return;
+
+    const submitBtn = form.querySelector('button[type=submit]');
+    submitBtn.disabled = true;
+
+    try {
+      await postMessage(entry);
+      render(await fetchMessages());
+      form.reset();
+      document.getElementById('overlay').removeAttribute('open');
+      location.hash = '#guestbook';
+    } catch (e) {
+      console.error('Post failed:', e);
+      alert('Sorry — could not send your message. Make sure the backend URL/permissions are correct.');
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+</script>
 </body>
 </html>
