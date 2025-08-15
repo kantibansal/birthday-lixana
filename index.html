@@ -75,8 +75,8 @@
 
     .frame{border:1.5px solid var(--line); border-radius:12px; background:#fff; padding:12px; display:grid; gap:10px}
     .hero{border:1.5px solid var(--line); border-radius:10px; overflow:hidden; aspect-ratio:16 / 10}
-    @media (min-width:1600px){ .hero{ aspect-ratio:16 / 9 } } /* taller hero on 4K */
-    .hero img{width:100%; height:100%; object-fit:cover; display:block}
+    @media (min-width:1600px){ .hero{ aspect-ratio:16 / 9 } }
+    .hero img{width:100%; height:100%; object-fit:cover; display:block; transition:opacity .5s ease; opacity:1}
     .thumbs{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
     .thumb{width:110px; height:70px; border-radius:8px; border:1.5px solid var(--line); overflow:hidden; cursor:pointer; background:#fff}
     .thumb img{width:100%; height:100%; object-fit:cover; display:block}
@@ -201,17 +201,44 @@
   <div class="confetti" aria-hidden="true" id="confetti"></div>
 
   <script>
-    // --- Image gallery ---
+    // --- Image gallery + auto-rotate ---
     const hero = document.getElementById('hero');
-    const thumbs = document.querySelectorAll('.thumb');
-    thumbs.forEach((btn, idx) => {
+    const thumbs = Array.from(document.querySelectorAll('.thumb'));
+    const frame  = document.querySelector('.frame');
+    let current  = thumbs.findIndex(b => b.getAttribute('aria-current') === 'true');
+    if (current < 0) current = 0;
+
+    function show(i){
+      current = (i + thumbs.length) % thumbs.length;
+      thumbs.forEach(x => x.removeAttribute('aria-current'));
+      const btn = thumbs[current];
+      btn.setAttribute('aria-current','true');
+
+      const src = btn.querySelector('img').src.replace('-thumb','');
+      hero.style.opacity = 0;               // fade out
+      hero.onload = () => { hero.style.opacity = 1; }; // fade in when new image loaded
+      hero.src = src;
+      hero.alt = 'Photo ' + (current+1);
+    }
+
+    thumbs.forEach((btn, i) => {
       btn.addEventListener('click', () => {
-        thumbs.forEach(x => x.removeAttribute('aria-current'));
-        btn.setAttribute('aria-current','true');
-        const src = btn.querySelector('img').src.replace('-thumb','');
-        hero.src = src; hero.alt = 'Photo ' + (idx+1);
+        show(i);
+        // pause auto-rotate after manual selection, then resume
+        clearInterval(autoTimer);
+        setTimeout(scheduleRotate, 8000);
       });
     });
+
+    function next(){ show(current + 1); }
+    let autoTimer;
+    const ROTATE_MS = 5500;
+    function scheduleRotate(){ clearInterval(autoTimer); autoTimer = setInterval(next, ROTATE_MS); }
+    scheduleRotate();
+
+    // Pause rotation while hovering the gallery (desktop)
+    frame.addEventListener('mouseenter', () => clearInterval(autoTimer));
+    frame.addEventListener('mouseleave', scheduleRotate);
 
     // --- Modal behavior ---
     const overlay = document.getElementById('overlay');
@@ -221,9 +248,10 @@
     closer && closer.addEventListener('click', () => overlay.removeAttribute('open'));
     overlay.addEventListener('click', e => { if (e.target === overlay) overlay.removeAttribute('open'); });
 
-    // --- Confetti (emoji, light, deferred) ---
+    // --- Confetti (emoji) — run on load so it always appears ---
     const confetti = document.getElementById('confetti');
     function makeConfetti(){
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       const emojis = ['🎉','🎊','✨','🎈'];
       for (let i=0; i<26; i++) {
         const s = document.createElement('span');
@@ -233,7 +261,7 @@
         confetti.appendChild(s);
       }
     }
-    (window.requestIdleCallback || window.setTimeout)(makeConfetti, 0);
+    window.addEventListener('load', makeConfetti);
   </script>
 
   <!-- Shared guestbook using your Google Apps Script backend (optimized) -->
@@ -285,9 +313,8 @@
         statusEl.textContent = 'Could not reach backend. Check API_BASE or deployment access.';
       }
     }
-    // Load ASAP, then lightly re-check after first paint for freshness.
     loadOnce();
-    setTimeout(loadOnce, 600);
+    setTimeout(loadOnce, 600); // quick follow-up for freshness
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -309,16 +336,13 @@
 
       try {
         await postMessage(entry);
-        // Give Sheets a beat, then refresh the list
-        await new Promise(r => setTimeout(r, 250));
+        await new Promise(r => setTimeout(r, 250)); // give Sheets a beat
         render(await fetchMessages());
 
-        // Reset form & modal
         form.reset();
         document.getElementById('overlay').removeAttribute('open');
         location.hash = '#guestbook';
 
-        // Success flash
         submitBtn.classList.remove('posting');
         submitBtn.classList.add('success');
         submitBtn.textContent = 'Posted!';
