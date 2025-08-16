@@ -110,4 +110,384 @@
     }
     .left .eyebrow::before,.left .eyebrow::after{content:''; height:2px; width:30px; background:linear-gradient(90deg,var(--lavender),var(--peach))}
     .title{font-family:'Cormorant Garamond',serif; font-size:clamp(38px,5.4vw,64px); line-height:1.1; margin:.2rem 0; color:var(--text); letter-spacing:-1px; font-weight:400}
-    .title span{font-style:italic;font-weight:600;background:linear-gradient(135deg,var(--peach),var
+    .title span{font-style:italic;font-weight:600;background:linear-gradient(135deg,var(--peach),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    @media (min-width:1600px){ .title{ font-size:clamp(52px,4.8vw,88px) } }
+    .sub{color:var(--text-light); margin:1.5rem 0 2.5rem; font-size:clamp(20px,1.8vw,28px); font-weight:400; line-height:1.8}
+    .sub .emphasis{font-weight:700; font-size:1.1em; background:linear-gradient(135deg,var(--coral),var(--peach)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-transform:uppercase; letter-spacing:1px}
+    .sub .excitement{font-weight:600; color:var(--sage); font-style:italic}
+
+    .phone-section{margin-bottom:3rem; padding:1.5rem; background:linear-gradient(135deg,rgba(136,192,164,.1),rgba(244,162,97,.1)); border-radius:15px; border-left:4px solid var(--sage); position:relative; overflow:hidden}
+    .phone-section::before{content:'☎'; position:absolute; right:20px; top:50%; transform:translateY(-50%); font-size:3rem; opacity:.1; color:var(--peach)}
+    .phone-label{font-size:.85rem; text-transform:uppercase; letter-spacing:2px; color:var(--sage); margin-bottom:.5rem; font-weight:600}
+    .number{font:700 2.2rem/1 'Montserrat',sans-serif; background:linear-gradient(135deg,var(--sage),var(--peach)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; letter-spacing:2px}
+
+    .cta{display:flex; flex-wrap:wrap; gap:1rem; align-items:center}
+    .btn{appearance:none; border:2px solid; border-radius:50px; padding:1.2rem 2.5rem; font-weight:600; font-size:.95rem; letter-spacing:1.5px; text-transform:uppercase; text-decoration:none; display:inline-flex; align-items:center; gap:.6rem; cursor:pointer; transition:.3s; position:relative; overflow:hidden}
+    .btn:disabled{filter:grayscale(.2); opacity:.85; cursor:not-allowed}
+    .btn.posting{background:var(--text-light)!important; color:#fff!important; border-color:transparent!important}
+    .btn.success{background:#22c55e!important; color:#fff!important; border-color:transparent!important}
+    .btn-sage{background:linear-gradient(135deg,var(--sage),var(--sage-dark)); color:#fff; border-color:transparent; box-shadow:0 5px 20px rgba(136,192,164,.3)}
+    .btn-sage:hover{transform:translateY(-2px); box-shadow:0 7px 25px rgba(136,192,164,.4)}
+    .btn-peach{background:#fff; color:var(--peach); border-color:var(--peach)}
+    .btn-peach:hover{background:rgba(244,162,97,.1); transform:translateY(-2px); box-shadow:0 5px 20px rgba(244,162,97,.2)}
+    .btn-lavender{background:#fff; color:var(--lavender); border-color:var(--lavender)}
+    .btn-lavender:hover{background:rgba(155,133,172,.1); transform:translateY(-2px); box-shadow:0 5px 20px rgba(155,133,172,.2)}
+
+    .frame{position:relative; padding:2rem; background:linear-gradient(135deg,rgba(155,133,172,.05),rgba(244,162,97,.05)); border-radius:20px; box-shadow:0 5px 20px rgba(0,0,0,.05)}
+    .hero{background:#fff; padding:1rem; border-radius:15px; box-shadow:inset 0 2px 10px rgba(244,162,97,.1); overflow:hidden; aspect-ratio:16/10}
+    @media (min-width:1600px){ .hero{ aspect-ratio:16/9 } }
+    .hero img{width:100%; height:100%; object-fit:cover; display:block; transition:opacity .5s; opacity:1; border-radius:10px}
+    .thumbs{display:grid; grid-template-columns:repeat(4,1fr); gap:.75rem; margin-top:1rem}
+    .thumb{aspect-ratio:1; border-radius:8px; border:2px solid rgba(244,162,97,.2); overflow:hidden; cursor:pointer; background:linear-gradient(135deg,rgba(136,192,164,.1),rgba(155,133,172,.1)); transition:.2s}
+    .thumb img{width:100%; height:100%; object-fit:cover}
+    .thumb[aria-current="true"]{border-color:var(--sage); transform:scale(1.05); box-shadow:0 5px 15px rgba(136,192,164,.3)}
+    .thumb:hover{border-color:var(--sage); transform:scale(1.05)}
+
+    .guest{margin:4rem 0; padding:3rem; background:rgba(255,255,255,.9); border-radius:20px; box-shadow:var(--shadow)}
+    .hand{font-family:'Cormorant Garamond',serif; font-size:clamp(28px,4vw,44px); color:var(--text); text-align:center; margin-bottom:2rem}
+    #status{text-align:center; color:var(--text-light); margin-bottom:1.5rem}
+    .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem}
+    .gcard{background:#fff; border-radius:15px; padding:1.5rem; box-shadow:0 2px 10px rgba(0,0,0,.05); border:1px solid rgba(136,192,164,.2); transition:.3s}
+    .gcard:hover{transform:translateY(-2px); box-shadow:0 5px 20px rgba(136,192,164,.15)}
+    .gcard h4{margin:.2rem 0 .5rem; font-size:1.2rem; color:var(--text); font-family:'Cormorant Garamond',serif}
+    .gcard .when{font-size:.86rem; color:var(--text-light); margin-bottom:.75rem}
+    .gcard p{margin:.4rem 0 0; white-space:pre-wrap; font-size:1rem; line-height:1.6; color:var(--text)}
+
+    .overlay{position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:500}
+    .overlay[open]{display:flex}
+    .modal{background:#fff; width:min(680px,92vw); border-radius:20px; box-shadow:var(--shadow); padding:2rem}
+    .modal header{display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem}
+    .modal h3{margin:0; font-family:'Cormorant Garamond',serif; font-size:36px; color:var(--text)}
+    form .row{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
+    @media (max-width:640px){ form .row{ grid-template-columns:1fr } }
+    label{font-weight:600; display:block; margin:1rem 0 .5rem; color:var(--text); text-transform:uppercase; font-size:.85rem; letter-spacing:1px}
+    input[type="text"],textarea{width:100%; padding:.75rem 1rem; border-radius:10px; border:2px solid rgba(136,192,164,.3); font:inherit; outline-color:var(--sage); background:rgba(255,255,255,.8); transition:.3s}
+    input[type="text"]:focus,textarea:focus{border-color:var(--sage); background:#fff}
+    textarea{min-height:120px; resize:vertical}
+
+    footer{width:100%; padding:20px 0 36px; text-align:center; color:var(--text-light); font-size:.9rem}
+    footer strong{color:var(--sage)}
+
+    .sticky{position:fixed; left:50%; bottom:14px; translate:-50% 0; z-index:60; display:none; gap:.6rem}
+    @media (max-width:760px){ .sticky{ display:flex } }
+
+    /* Confetti now *behind* content */
+    .confetti{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:-2}
+    .confetti span{position:absolute; top:-10vh; font-size:clamp(16px,3vw,22px); animation:fall linear var(--d) infinite; left:var(--x)}
+    @keyframes fall{0%{transform:translateY(-10vh) rotate(0); opacity:0} 10%{opacity:1} 100%{transform:translateY(110vh) rotate(360deg); opacity:0}}
+
+    /* Mobile */
+    @media (max-width:480px){
+      html,body{font-size:16px}
+      .container{width:min(460px,94vw)}
+      .header-inner{flex-direction:column; gap:1rem; padding:1.5rem 1rem}
+      .brand{font-size:2rem}
+      nav{width:100%; justify-content:space-between}
+      .title{font-size:clamp(36px,9vw,48px); text-align:center}
+      .sub{font-size:clamp(18px,5vw,24px); text-align:center}
+      .left .eyebrow{justify-content:center}
+      .phone-section{text-align:center}
+      .cta{flex-direction:column; align-items:stretch}
+      .btn{width:100%; justify-content:center; font-size:16px; padding:1rem 1.5rem}
+      .btn-xl{padding:1.05rem 1.3rem; font-size:1.05rem; height:56px; width:100%}
+      .left{text-align:center}
+      .number{font-size:1.8rem}
+      .thumbs{grid-template-columns:repeat(2,1fr)}
+      .card{padding:1.5rem; gap:1.5rem}
+      .guest{margin:2rem 0; padding:1.5rem}
+      .cards{grid-template-columns:1fr}
+      .watercolor{filter:blur(60px)}
+      .bunting{display:none}
+    }
+  </style>
+</head>
+<body>
+  <!-- Background -->
+  <div class="graffiti-bg">
+    <div class="graffiti-element" style="top:15%;left:10%;animation-delay:0s;color:var(--peach)">◈</div>
+    <div class="graffiti-element" style="top:25%;right:15%;animation-delay:2s;color:var(--sage)">◆</div>
+    <div class="graffiti-element" style="bottom:30%;left:20%;animation-delay:4s;color:var(--lavender)">◇</div>
+    <div class="graffiti-element" style="top:60%;right:25%;animation-delay:1s;color:var(--coral)">◈</div>
+    <div class="graffiti-element" style="bottom:15%;right:10%;animation-delay:3s;color:var(--sage)">✦</div>
+    <div class="graffiti-element" style="top:40%;left:5%;animation-delay:5s;color:var(--peach)">◉</div>
+  </div>
+  <div class="watercolor watercolor1"></div>
+  <div class="watercolor watercolor2"></div>
+  <div class="watercolor watercolor3"></div>
+  <div class="bunting">
+    <div class="bunting-flag" style="border-bottom:50px solid var(--peach);left:5%;animation-delay:0s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--sage);left:15%;animation-delay:.2s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--lavender);left:25%;animation-delay:.4s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--coral);left:35%;animation-delay:.6s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--peach);left:45%;animation-delay:.8s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--sage);left:55%;animation-delay:1s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--lavender);left:65%;animation-delay:1.2s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--coral);left:75%;animation-delay:1.4s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--peach);left:85%;animation-delay:1.6s"></div>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="header-inner">
+        <div class="brand" data-i18n="brand">Lixana's Birthday</div>
+        <nav>
+          <a href="#top" data-i18n="nav.home">Home</a>
+          <a href="#guestbook" data-i18n="nav.guestbook">Guestbook</a>
+          <div class="lang-toggle" aria-label="Language">
+            <button class="lang-btn" id="btnEN" data-lang="en" aria-pressed="true">EN</button>
+            <button class="lang-btn" id="btnES" data-lang="es" aria-pressed="false">ES</button>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="card">
+        <div class="cake-decoration">
+          <div class="cake"><div class="sparkler"><div class="spark"></div></div></div>
+        </div>
+
+        <div class="left">
+          <div class="eyebrow" data-i18n="eyebrow">Come celebrate with us</div>
+          <h1 class="title">Call or Text <span>Lixana</span></h1>
+          <p class="sub"><span class="emphasis" data-i18n="wish">Wish</span> her a happy birthday! <span class="excitement" data-i18n="mean">It would mean so much!</span></p>
+
+          <div class="phone-section">
+            <div class="phone-label" data-i18n="numberLabel">Contact Number</div>
+            <div class="number">347-647-9499</div>
+          </div>
+
+          <div class="cta">
+            <a class="btn btn-sage btn-xl" href="tel:+13476479499" data-i18n="btn.call">📞 Call</a>
+            <a class="btn btn-peach btn-xl" href="sms:+13476479499" data-i18n="btn.text">💬 Text</a>
+            <button class="btn btn-lavender btn-xl" id="openModal" type="button" data-i18n="btn.leave">✍️ Leave a Message</button>
+          </div>
+        </div>
+
+        <aside class="frame" aria-label="Photo gallery">
+          <figure class="hero"><img id="hero" src="img/photo1.jpg" alt="Lixana photo" loading="eager" decoding="async" /></figure>
+          <div class="thumbs">
+            <button class="thumb" aria-current="true"><img src="img/photo1-thumb.jpg" alt="Photo 1" loading="lazy" decoding="async" /></button>
+            <button class="thumb"><img src="img/photo2-thumb.jpg" alt="Photo 2" loading="lazy" decoding="async" /></button>
+            <button class="thumb"><img src="img/photo3-thumb.jpg" alt="Photo 3" loading="lazy" decoding="async" /></button>
+            <button class="thumb"><img src="img/photo4-thumb.jpg" alt="Photo 4" loading="lazy" decoding="async" /></button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="guest" id="guestbook">
+        <h2 class="hand" data-i18n="guestbook.title">Messages for Lixana</h2>
+        <div id="status" data-i18n="status.loading">Loading messages…</div>
+        <div id="cards" class="cards" aria-live="polite"></div>
+        <div style="margin-top:2rem; display:flex; justify-content:center;">
+          <button class="btn btn-lavender btn-xl" id="openModal2" type="button" data-i18n="btn.leave">✍️ Leave a Message</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span data-i18n="footer.prefix">Made with ❤️ — Call or text</span> <strong>347-647-9499</strong>.
+    </footer>
+  </div>
+
+  <div class="sticky">
+    <a class="btn btn-sage" href="tel:+13476479499" data-i18n="btn.call">📞 Call</a>
+    <a class="btn btn-peach" href="sms:+13476479499" data-i18n="btn.text">💬 Text</a>
+  </div>
+
+  <!-- Modal -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+    <div class="modal">
+      <header>
+        <h3 id="dialogTitle" data-i18n="modal.title">Leave a message</h3>
+        <button id="closeModal" class="btn btn-lavender" type="button" data-i18n="modal.close">Close</button>
+      </header>
+      <form id="form">
+        <div class="row">
+          <div>
+            <label for="name" data-i18n="form.name">Your name</label>
+            <input id="name" name="name" type="text" placeholder="Jane Doe" />
+          </div>
+          <div>
+            <label for="contact" data-i18n="form.contact">Contact (optional)</label>
+            <input id="contact" name="contact" type="text" placeholder="phone or email" data-i18n-placeholder="ph.contact">
+          </div>
+        </div>
+        <label for="message" data-i18n="form.message">Your message</label>
+        <textarea id="message" name="message" placeholder="Write something sweet…" data-i18n-placeholder="ph.message"></textarea>
+        <div class="cta" style="margin-top:1.5rem">
+          <button class="btn btn-sage" type="submit" data-i18n="form.post">Post message</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confetti (behind) -->
+  <div class="confetti" aria-hidden="true" id="confetti"></div>
+
+  <!-- i18n -->
+  <script>
+    const I18N = {
+      en:{pageTitle:"Call or Text Lixana 🎉",metaDesc:"Wish Lixana a happy birthday — call or text, and leave a message.",brand:"Lixana's Birthday","nav.home":"Home","nav.guestbook":"Guestbook",eyebrow:"Come celebrate with us",title:"Call or Text Lixana",wish:"Wish",mean:"It would mean so much!","btn.call":"📞 Call","btn.text":"💬 Text","btn.leave":"✍️ Leave a Message",numberLabel:"Contact Number","guestbook.title":"Messages for Lixana","status.loading":"Loading messages…","status.live":"Live guestbook enabled via Supabase.","status.error":"Could not reach backend. Please try again.",empty:"Be the first to leave a message! 🎉","modal.title":"Leave a message","modal.close":"Close","form.name":"Your name","form.contact":"Contact (optional)","form.message":"Your message","form.post":"Post message","ph.contact":"phone or email","ph.message":"Write something sweet…","footer.prefix":"Made with ❤️ — Call or text",posting:"Posting…",posted:"Posted!",postFail:"Sorry — could not send your message. Please try again."},
+      es:{pageTitle:"Llama o envía SMS a Lixana 🎉",metaDesc:"Felicita a Lixana: llama, envía SMS o deja un mensaje.",brand:"Cumpleaños de Lixana","nav.home":"Inicio","nav.guestbook":"Libro de visitas",eyebrow:"Ven a celebrar con nosotros",title:"Llamar o enviar SMS a Lixana",wish:"Deséale",mean:"¡Le haría mucha ilusión!","btn.call":"📞 Llamar","btn.text":"💬 Enviar SMS","btn.leave":"✍️ Dejar un mensaje",numberLabel:"Número de Contacto","guestbook.title":"Mensajes para Lixana","status.loading":"Cargando mensajes…","status.live":"Libro de visitas en vivo con Supabase.","status.error":"No se pudo conectar. Inténtalo de nuevo.",empty:"¡Sé la primera persona en dejar un mensaje! 🎉","modal.title":"Dejar un mensaje","modal.close":"Cerrar","form.name":"Tu nombre","form.contact":"Contacto (opcional)","form.message":"Tu mensaje","form.post":"Publicar mensaje","ph.contact":"teléfono o correo","ph.message":"Escribe algo bonito…","footer.prefix":"Hecho con ❤️ — Llama o envía SMS",posting:"Publicando…",posted:"¡Publicado!",postFail:"No se pudo enviar el mensaje. Intenta de nuevo."}
+    };
+    function applyI18n(lang){
+      const d=I18N[lang]||I18N.en;
+      document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n"); if(d[k]!=null) el.textContent=d[k];});
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{const k=el.getAttribute("data-i18n-placeholder"); if(d[k]!=null) el.setAttribute("placeholder", d[k]);});
+      document.documentElement.lang=lang; document.title=d.pageTitle||document.title;
+      const m=document.querySelector('meta[name="description"]'); if(m&&d.metaDesc) m.setAttribute("content", d.metaDesc);
+      document.getElementById("btnEN").setAttribute("aria-pressed", lang==='en'?'true':'false');
+      document.getElementById("btnES").setAttribute("aria-pressed", lang==='es'?'true':'false');
+      const se=document.getElementById('status'); if(se){
+        if(se.dataset.state==='loading') se.textContent=d["status.loading"];
+        else if(se.dataset.state==='live') se.textContent=d["status.live"];
+        else if(se.dataset.state==='error') se.textContent=d["status.error"];
+      }
+    }
+    function t(key){const lang=localStorage.getItem('lang')||'en';return (I18N[lang]&&I18N[lang][key])||I18N.en[key]||key;}
+    let currentLang=localStorage.getItem("lang")||'en';
+    applyI18n(currentLang);
+    document.getElementById('btnEN').addEventListener('click',()=>{currentLang='en';localStorage.setItem('lang','en');applyI18n('en');});
+    document.getElementById('btnES').addEventListener('click',()=>{currentLang='es';localStorage.setItem('lang','es');applyI18n('es');});
+  </script>
+
+  <!-- Gallery / modal / confetti -->
+  <script>
+    const hero=document.getElementById('hero');
+    const thumbs=Array.from(document.querySelectorAll('.thumb'));
+    const frame=document.querySelector('.frame');
+    let current=thumbs.findIndex(b=>b.getAttribute('aria-current')==='true'); if(current<0) current=0;
+    function swapTo(src,alt){hero.style.opacity=0; const onload=()=>{hero.style.opacity=1; hero.removeEventListener('load',onload)}; hero.addEventListener('load',onload); hero.src=src; hero.alt=alt;}
+    function show(i){current=(i+thumbs.length)%thumbs.length; thumbs.forEach(x=>x.removeAttribute('aria-current')); const btn=thumbs[current]; btn.setAttribute('aria-current','true'); const src=btn.querySelector('img').src.replace('-thumb',''); swapTo(src,'Photo '+(current+1));}
+    thumbs.forEach((btn,i)=>{btn.addEventListener('click',()=>{show(i); clearInterval(autoTimer); setTimeout(scheduleRotate,8000);});});
+    function next(){show(current+1);}
+    let autoTimer; const ROTATE_MS=5500; function scheduleRotate(){clearInterval(autoTimer); autoTimer=setInterval(next,ROTATE_MS);} scheduleRotate();
+    frame.addEventListener('mouseenter',()=>clearInterval(autoTimer));
+    frame.addEventListener('mouseleave',scheduleRotate);
+    frame.addEventListener('touchstart',()=>clearInterval(autoTimer),{passive:true});
+    frame.addEventListener('touchend',()=>setTimeout(scheduleRotate,8000),{passive:true});
+
+    const overlay=document.getElementById('overlay');
+    document.getElementById('openModal').addEventListener('click',()=>overlay.setAttribute('open',''));
+    document.getElementById('openModal2').addEventListener('click',()=>overlay.setAttribute('open',''));
+    document.getElementById('closeModal').addEventListener('click',()=>overlay.removeAttribute('open'));
+    overlay.addEventListener('click',e=>{ if(e.target===overlay) overlay.removeAttribute('open'); });
+
+    // Background confetti
+    const confetti=document.getElementById('confetti');
+    function makeConfetti(){
+      if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const emojis=['🎉','🎊','✨','🎈'];
+      for(let i=0;i<26;i++){
+        const s=document.createElement('span');
+        s.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+        s.style.setProperty('--x',Math.random()*100+'vw');
+        s.style.setProperty('--d',(6+Math.random()*9)+'s');
+        confetti.appendChild(s);
+      }
+    }
+    window.addEventListener('load',makeConfetti);
+  </script>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL='https://dtxjzcufdjivbaurwgal.supabase.co';
+    const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0eGp6Y3VmZGppdmJhdXJ3Z2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzMTMyNzAsImV4cCI6MjA3MDg4OTI3MH0.YVdvxrg_WOvWvftB4vNXzyj6rt2kabGLksDr_mDVyVs';
+    const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+
+    const statusEl=document.getElementById('status'); statusEl.dataset.state='loading';
+    const cardsEl=document.getElementById('cards');
+    const form=document.getElementById('form');
+
+    function fmt(ts){return new Date(ts).toLocaleString([], {dateStyle:'medium', timeStyle:'short'});}
+    function sanitize(s){return String(s||'').replace(/[<>]/g,'');}
+    function render(list){
+      list.sort((a,b)=>b.time-a.time);
+      cardsEl.innerHTML=list.length
+        ? list.map(m=>`<article class="gcard">
+              <h4>${sanitize(m.name) || 'Anonymous'}</h4>
+              <div class="when">${fmt(m.time)}${m.contact ? ' • ' + sanitize(m.contact) : ''}</div>
+              <p>${sanitize(m.text)}</p>
+            </article>`).join('')
+        : `<div class="gcard">${t('empty')}</div>`;
+    }
+
+    // Fetch tries created_at first (typical), then time
+    async function fetchMessages(){
+      let res = await sb.from('messages').select('name,contact,text,created_at').order('created_at',{ascending:false}).limit(200);
+      if(res.error){
+        // fallback: some older sheets might use 'time'
+        res = await sb.from('messages').select('name,contact,text,time').order('time',{ascending:false}).limit(200);
+        if(res.error) throw res.error;
+      }
+      const rows=res.data||[];
+      return rows.map(r=>({
+        name:r.name, contact:r.contact, text:r.text,
+        time: r.created_at ? new Date(r.created_at).getTime()
+                           : (r.time ? new Date(r.time).getTime() : Date.now())
+      }));
+    }
+
+    // Insert only known columns (avoid failing on non-existent 'time')
+    async function postMessage(entry){
+      const { error } = await sb.from('messages').insert({
+        name: entry.name || 'Anonymous',
+        contact: entry.contact || null,
+        text: entry.text
+      });
+      if(error) throw error;
+      return true;
+    }
+
+    async function loadOnce(){
+      try{
+        statusEl.dataset.state='loading'; statusEl.textContent=t('status.loading');
+        render(await fetchMessages());
+        statusEl.dataset.state='live'; statusEl.textContent=t('status.live');
+      }catch(e){
+        console.error('Load failed:', e);
+        statusEl.dataset.state='error'; statusEl.textContent=t('status.error');
+      }
+    }
+    loadOnce();
+    setTimeout(loadOnce,600);
+
+    // Realtime (requires replication enabled for messages)
+    sb.channel('public:messages')
+      .on('postgres_changes',{event:'INSERT',schema:'public',table:'messages'},()=>loadOnce())
+      .subscribe();
+
+    form.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const submitBtn=form.querySelector('button[type=submit]');
+      const originalText=submitBtn.textContent;
+
+      const entry={
+        name:(form.elements['name']?.value||'').trim(),
+        contact:(form.elements['contact']?.value||'').trim(),
+        text:(form.elements['message']?.value||'').trim()
+      };
+      if(!entry.text) return;
+
+      submitBtn.disabled=true; submitBtn.classList.add('posting'); submitBtn.textContent=t('posting');
+
+      try{
+        await postMessage(entry);
+        await new Promise(r=>setTimeout(r,150));
+        await loadOnce();
+        form.reset();
+        document.getElementById('overlay').removeAttribute('open');
+        location.hash='#guestbook';
+        submitBtn.classList.remove('posting'); submitBtn.classList.add('success'); submitBtn.textContent=t('posted');
+        setTimeout(()=>{submitBtn.classList.remove('success'); submitBtn.textContent=originalText; submitBtn.disabled=false;},1100);
+      }catch(e){
+        console.error('Post failed:', e);
+        alert(t('postFail'));
+        submitBtn.classList.remove('posting'); submitBtn.disabled=false; submitBtn.textContent=originalText;
+      }
+    });
+  </script>
+</body>
+</html>
