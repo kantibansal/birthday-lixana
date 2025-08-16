@@ -29,7 +29,6 @@
       display:flex; flex-direction:column; align-items:center;
     }
 
-    /* Desktop / large — unchanged layout */
     .container{width:min(1400px,96vw); margin:0 auto}
     @media (min-width:1600px){ .container{ width:min(1700px,92vw) } }
 
@@ -40,7 +39,6 @@
     nav a{text-decoration:none; color:var(--ink); font-weight:600; opacity:.75}
     nav a:hover{opacity:1}
 
-    /* Language toggle */
     .lang-toggle{display:flex; gap:6px; align-items:center}
     .lang-btn{
       appearance:none; border:1.5px solid var(--line); background:#fff; color:#111;
@@ -65,7 +63,16 @@
       color:var(--ink); text-wrap:balance;
     }
     @media (min-width:1600px){ .title{ font-size:clamp(52px,4.8vw,88px) } }
-    .sub{color:var(--muted); margin:.3rem 0 1rem}
+
+    /* Bigger, bolder sub-headline */
+    .sub{
+      color:var(--ink);
+      margin:.35rem 0 1.1rem;
+      font-size:clamp(20px, 1.8vw, 28px);
+      font-weight:700;
+      letter-spacing:.2px;
+      text-wrap:balance;
+    }
 
     .cta{display:flex; flex-wrap:wrap; gap:.8rem; align-items:center}
     .btn{appearance:none; border:0; border-radius:999px; padding:.9rem 1.2rem; font-weight:700;
@@ -111,27 +118,25 @@
 
     footer{width:100%; padding:20px 0 36px; text-align:center; color:var(--muted)}
 
-    /* Sticky mobile call bar */
     .sticky{position:fixed; left:50%; bottom:14px; translate:-50% 0; z-index:60; display:none; gap:.6rem}
     @media (max-width:760px){ .sticky{ display:flex } }
 
-    /* Confetti */
     .confetti{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0}
     .confetti span{position:absolute; top:-10vh; font-size:clamp(16px,3vw,22px); animation:fall linear var(--d) infinite; left:var(--x)}
     @keyframes fall{0%{transform:translateY(-10vh) rotate(0); opacity:0} 10%{opacity:1} 100%{transform:translateY(110vh) rotate(360deg); opacity:0}}
 
-    /* --------- MOBILE Poster face only (desktop untouched) --------- */
+    /* Mobile poster face tweaks */
     @media (max-width: 480px){
       html, body { font-size:18px }
       .container{ width:min(460px, 94vw) }
       .title{ font-size: clamp(40px, 9vw, 48px); text-align:center }
-      .sub{ font-size: 18px; text-align:center }
+      .sub{ font-size: clamp(22px, 6vw, 26px); text-align:center }
       .cta{ flex-direction:column; align-items:stretch }
       .btn{ width:100%; justify-content:center; font-size:18px }
       .btn-xl{ padding:1.05rem 1.3rem; font-size:1.15rem; height:64px; width:100%; justify-content:center; }
       .left{ text-align:center }
       .number{ font-size:22px }
-      .thumbs{ display:none } /* hide desktop thumbs on tiny phones */
+      .thumbs{ display:none }
       .card{ padding:18px; gap:18px }
       .guest{ margin:18px 0 72px }
     }
@@ -158,7 +163,7 @@
         <div class="left">
           <div class="eyebrow" data-i18n="eyebrow">Come celebrate with us</div>
           <h1 class="title" data-i18n="title">Call or Text Lixana</h1>
-          <p class="sub" data-i18n="sub">A quick hello means the world! Tap a button or leave a message for the guestbook.</p>
+          <p class="sub" data-i18n="sub">Wish her a HAPPY Birthday! It would mean so much!</p>
           <div class="cta">
             <a class="btn btn-dark btn-xl" href="tel:+13476479499" data-i18n="btn.call">📞 Call</a>
             <a class="btn btn-gold btn-xl" href="sms:+13476479499" data-i18n="btn.text">💬 Text</a>
@@ -231,7 +236,7 @@
 
   <div class="confetti" aria-hidden="true" id="confetti"></div>
 
-  <!-- i18n -->
+  <!-- i18n with updated sub-text -->
   <script>
     const I18N = {
       en: {
@@ -242,7 +247,7 @@
         "nav.guestbook": "Guestbook",
         eyebrow: "Come celebrate with us",
         title: "Call or Text Lixana",
-        sub: "A quick hello means the world! Tap a button or leave a message for the guestbook.",
+        sub: "Wish her a HAPPY Birthday! It would mean so much!",
         "btn.call": "📞 Call",
         "btn.text": "💬 Text",
         "btn.leave": "✍️ Leave a Message",
@@ -273,7 +278,7 @@
         "nav.guestbook": "Libro de visitas",
         eyebrow: "Ven a celebrar con nosotros",
         title: "Llamar o enviar SMS a Lixana",
-        sub: "¡Un saludo rápido significa mucho! Toca un botón o deja un mensaje para el libro de visitas.",
+        sub: "¡Deséale un FELIZ cumpleaños! ¡Le haría mucha ilusión!",
         "btn.call": "📞 Llamar",
         "btn.text": "💬 Enviar SMS",
         "btn.leave": "✍️ Dejar un mensaje",
@@ -394,7 +399,6 @@
   <!-- Supabase client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // --- Supabase config (public anon key; RLS must be enabled) ---
     const SUPABASE_URL = 'https://dtxjzcufdjivbaurwgal.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0eGp6Y3VmZGppdmJhdXJ3Z2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzMTMyNzAsImV4cCI6MjA3MDg4OTI3MH0.YVdvxrg_WOvWvftB4vNXzyj6rt2kabGLksDr_mDVyVs';
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -449,9 +453,8 @@
       }
     }
     loadOnce();
-    setTimeout(loadOnce, 600); // small follow-up refresh
+    setTimeout(loadOnce, 600);
 
-    // Optional realtime: auto-refresh on new inserts
     sb.channel('public:messages')
       .on('postgres_changes', { event:'INSERT', schema:'public', table:'messages' }, () => loadOnce())
       .subscribe();
