@@ -8,6 +8,8 @@
   <meta name="theme-color" content="#ff7aa2" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://dtxjzcufdjivbaurwgal.supabase.co" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
@@ -29,9 +31,7 @@
 
     /* Desktop / large — unchanged layout */
     .container{width:min(1400px,96vw); margin:0 auto}
-    @media (min-width:1600px){
-      .container{ width:min(1700px,92vw) }
-    }
+    @media (min-width:1600px){ .container{ width:min(1700px,92vw) } }
 
     header{width:100%}
     .header-inner{padding:18px 0; display:flex; align-items:center; justify-content:space-between; gap:12px}
@@ -62,18 +62,15 @@
     .title{
       font-family:'Dancing Script',cursive;
       font-size:clamp(38px,5.4vw,64px); line-height:1.04; margin:.2rem 0;
-      color:var(--ink);
-      text-wrap:balance;
+      color:var(--ink); text-wrap:balance;
     }
-    @media (min-width:1600px){
-      .title{ font-size:clamp(52px,4.8vw,88px) }
-    }
+    @media (min-width:1600px){ .title{ font-size:clamp(52px,4.8vw,88px) } }
     .sub{color:var(--muted); margin:.3rem 0 1rem}
 
     .cta{display:flex; flex-wrap:wrap; gap:.8rem; align-items:center}
     .btn{appearance:none; border:0; border-radius:999px; padding:.9rem 1.2rem; font-weight:700;
       text-decoration:none; display:inline-flex; align-items:center; gap:.6rem; cursor:pointer;
-      box-shadow:0 10px 18px rgba(0,0,0,.14); transition:transform .08s ease, filter .15s ease}
+      box-shadow:0 10px 18px rgba(0,0,0,.14); transition:transform .08s ease, filter .15s ease, background .15s ease}
     .btn:active{ transform:translateY(1px) }
     .btn:disabled{ filter:grayscale(.2); opacity:.85; cursor:not-allowed }
     .btn.posting{ background:#6b7280 !important; color:#fff !important }
@@ -131,13 +128,7 @@
       .sub{ font-size: 18px; text-align:center }
       .cta{ flex-direction:column; align-items:stretch }
       .btn{ width:100%; justify-content:center; font-size:18px }
-      .btn-xl{
-        padding:1.05rem 1.3rem;
-        font-size:1.15rem;
-        height:64px;
-        width:100%;
-        justify-content:center;
-      }
+      .btn-xl{ padding:1.05rem 1.3rem; font-size:1.15rem; height:64px; width:100%; justify-content:center; }
       .left{ text-align:center }
       .number{ font-size:22px }
       .thumbs{ display:none } /* hide desktop thumbs on tiny phones */
@@ -240,8 +231,8 @@
 
   <div class="confetti" aria-hidden="true" id="confetti"></div>
 
+  <!-- i18n -->
   <script>
-    // --- i18n dictionary ---
     const I18N = {
       en: {
         pageTitle: "Call or Text Lixana 🎉",
@@ -258,8 +249,8 @@
         numberLabel: "Number:",
         "guestbook.title": "Messages for Lixana",
         "status.loading": "Loading messages…",
-        "status.live": "Live guestbook enabled via Google Sheet.",
-        "status.error": "Could not reach backend. Check API_BASE or deployment access.",
+        "status.live": "Live guestbook enabled via Supabase.",
+        "status.error": "Could not reach backend. Please try again.",
         empty: "Be the first to leave a message! 🎉",
         "modal.title": "Leave a message",
         "modal.close": "Close",
@@ -289,8 +280,8 @@
         numberLabel: "Número:",
         "guestbook.title": "Mensajes para Lixana",
         "status.loading": "Cargando mensajes…",
-        "status.live": "Libro de visitas en vivo habilitado vía Google Sheet.",
-        "status.error": "No se pudo conectar al servidor. Revisa API_BASE o los permisos del despliegue.",
+        "status.live": "Libro de visitas en vivo con Supabase.",
+        "status.error": "No se pudo conectar. Inténtalo de nuevo.",
         empty: "¡Sé la primera persona en dejar un mensaje! 🎉",
         "modal.title": "Dejar un mensaje",
         "modal.close": "Cerrar",
@@ -303,49 +294,43 @@
         "footer.prefix": "Hecho con ❤️ — Llama o envía SMS",
         posting: "Publicando…",
         posted: "¡Publicado!",
-        postFail: "Perdón — no se pudo enviar tu mensaje. Inténtalo de nuevo."
+        postFail: "No se pudo enviar el mensaje. Intenta de nuevo."
       }
     };
 
-    const htmlEl = document.documentElement;
-    const metaDescEl = document.querySelector('meta[name="description"]');
-
     function applyI18n(lang){
       const dict = I18N[lang] || I18N.en;
-      // Update text nodes
       document.querySelectorAll("[data-i18n]").forEach(el=>{
         const key = el.getAttribute("data-i18n");
         if (dict[key] != null) el.textContent = dict[key];
       });
-      // Update placeholders
       document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
         const key = el.getAttribute("data-i18n-placeholder");
         if (dict[key] != null) el.setAttribute("placeholder", dict[key]);
       });
-      // Document language, title, meta description
-      htmlEl.lang = lang;
+      document.documentElement.lang = lang;
       document.title = dict.pageTitle || document.title;
-      if (metaDescEl && dict.metaDesc) metaDescEl.setAttribute("content", dict.metaDesc);
-      // Toggle button states
+      const m = document.querySelector('meta[name="description"]');
+      if (m && dict.metaDesc) m.setAttribute("content", dict.metaDesc);
       document.getElementById("btnEN").setAttribute("aria-pressed", lang==='en' ? 'true' : 'false');
       document.getElementById("btnES").setAttribute("aria-pressed", lang==='es' ? 'true' : 'false');
-      // Update dynamic status text if already set
-      if (statusEl && statusEl.dataset.state === 'loading') statusEl.textContent = dict["status.loading"];
-      if (statusEl && statusEl.dataset.state === 'live')    statusEl.textContent = dict["status.live"];
-      if (statusEl && statusEl.dataset.state === 'error')   statusEl.textContent = dict["status.error"];
+      const se = document.getElementById('status');
+      if (se) {
+        if (se.dataset.state === 'loading') se.textContent = dict["status.loading"];
+        else if (se.dataset.state === 'live')  se.textContent = dict["status.live"];
+        else if (se.dataset.state === 'error') se.textContent = dict["status.error"];
+      }
     }
+    function t(key){ const lang = localStorage.getItem('lang') || 'en'; return (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key; }
 
-    // Persisted language
     let currentLang = localStorage.getItem("lang") || 'en';
     applyI18n(currentLang);
-
-    // Lang toggle events
-    document.getElementById('btnEN').addEventListener('click', ()=>{ currentLang='en'; localStorage.setItem('lang', 'en'); applyI18n('en'); });
-    document.getElementById('btnES').addEventListener('click', ()=>{ currentLang='es'; localStorage.setItem('lang', 'es'); applyI18n('es'); });
+    document.getElementById('btnEN').addEventListener('click', ()=>{ currentLang='en'; localStorage.setItem('lang','en'); applyI18n('en'); });
+    document.getElementById('btnES').addEventListener('click', ()=>{ currentLang='es'; localStorage.setItem('lang','es'); applyI18n('es'); });
   </script>
 
+  <!-- Gallery / modal / confetti -->
   <script>
-    // --- Image gallery + auto-rotate ---
     const hero = document.getElementById('hero');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
     const frame  = document.querySelector('.frame');
@@ -358,7 +343,6 @@
       hero.addEventListener('load', onload);
       hero.src = src; hero.alt = alt;
     }
-
     function show(i){
       current = (i + thumbs.length) % thumbs.length;
       thumbs.forEach(x => x.removeAttribute('aria-current'));
@@ -367,28 +351,23 @@
       const src = btn.querySelector('img').src.replace('-thumb','');
       swapTo(src, 'Photo ' + (current+1));
     }
-
     thumbs.forEach((btn, i) => {
       btn.addEventListener('click', () => {
         show(i);
         clearInterval(autoTimer);
-        setTimeout(scheduleRotate, 8000); // resume later after manual interaction
+        setTimeout(scheduleRotate, 8000);
       });
     });
-
     function next(){ show(current + 1); }
-    let autoTimer;
-    const ROTATE_MS = 5500;
+    let autoTimer; const ROTATE_MS = 5500;
     function scheduleRotate(){ clearInterval(autoTimer); autoTimer = setInterval(next, ROTATE_MS); }
     scheduleRotate();
-
-    // Pause rotation while interacting with the gallery
     frame.addEventListener('mouseenter', () => clearInterval(autoTimer));
     frame.addEventListener('mouseleave', scheduleRotate);
     frame.addEventListener('touchstart', () => clearInterval(autoTimer), {passive:true});
     frame.addEventListener('touchend', () => setTimeout(scheduleRotate, 8000), {passive:true});
 
-    // --- Modal behavior ---
+    // Modal
     const overlay = document.getElementById('overlay');
     const openers = [document.getElementById('openModal'), document.getElementById('openModal2')];
     const closer = document.getElementById('closeModal');
@@ -396,7 +375,7 @@
     closer && closer.addEventListener('click', () => overlay.removeAttribute('open'));
     overlay.addEventListener('click', e => { if (e.target === overlay) overlay.removeAttribute('open'); });
 
-    // --- Confetti (emoji) — always run on load, respect reduced motion ---
+    // Confetti (respects reduced motion)
     const confetti = document.getElementById('confetti');
     function makeConfetti(){
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -412,18 +391,18 @@
     window.addEventListener('load', makeConfetti);
   </script>
 
-  <!-- Shared guestbook using your Google Apps Script backend (i18n-aware statuses) -->
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // Your deployed Apps Script URL:
-    const API_BASE = "https://script.google.com/macros/s/AKfycbzeQJ3gjjptsiYxNBTxlzruLfbjUmIQKvo4jNI5IYjYjhvh_ArK7KE0Ykb8NMVn9SRM/exec";
+    // --- Supabase config (public anon key; RLS must be enabled) ---
+    const SUPABASE_URL = 'https://dtxjzcufdjivbaurwgal.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0eGp6Y3VmZGppdmJhdXJ3Z2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzMTMyNzAsImV4cCI6MjA3MDg4OTI3MH0.YVdvxrg_WOvWvftB4vNXzyj6rt2kabGLksDr_mDVyVs';
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const statusEl = document.getElementById('status');
-    statusEl.dataset.state = 'loading';
-
+    const statusEl = document.getElementById('status'); statusEl.dataset.state = 'loading';
     const cardsEl  = document.getElementById('cards');
     const form     = document.getElementById('form');
 
-    function t(key){ return (I18N[currentLang] && I18N[currentLang][key]) || (I18N.en && I18N.en[key]) || key; }
     function fmt(ts){ return new Date(ts).toLocaleString([], {dateStyle:'medium', timeStyle:'short'}); }
     function sanitize(s){ return String(s||'').replace(/[<>]/g,''); }
     function render(list){
@@ -440,35 +419,42 @@
     }
 
     async function fetchMessages(){
-      const r = await fetch(API_BASE + '?ts=' + Date.now(), { cache:'no-store' });
-      if (!r.ok) throw new Error('HTTP '+r.status);
-      return (await r.json()) || [];
+      const { data, error } = await sb
+        .from('messages')
+        .select('name,contact,text,created_at')
+        .order('created_at', { ascending:false })
+        .limit(200);
+      if (error) throw error;
+      return data.map(r => ({ name:r.name, contact:r.contact, text:r.text, time:new Date(r.created_at).getTime() }));
     }
+
     async function postMessage(entry){
-      const r = await fetch(API_BASE, {
-        method:'POST',
-        headers:{ 'Content-Type':'text/plain;charset=UTF-8' }, // avoids preflight
-        body: JSON.stringify(entry)
+      const { error } = await sb.from('messages').insert({
+        name: entry.name || 'Anonymous',
+        contact: entry.contact || null,
+        text: entry.text
       });
-      if (!r.ok) throw new Error('HTTP '+r.status);
-      return await r.json();
+      if (error) throw error;
+      return true;
     }
 
     async function loadOnce(){
       try {
-        statusEl.dataset.state = 'loading';
-        statusEl.textContent = t('status.loading');
+        statusEl.dataset.state = 'loading'; statusEl.textContent = t('status.loading');
         render(await fetchMessages());
-        statusEl.dataset.state = 'live';
-        statusEl.textContent = t('status.live');
+        statusEl.dataset.state = 'live'; statusEl.textContent = t('status.live');
       } catch (e) {
         console.error('Load failed:', e);
-        statusEl.dataset.state = 'error';
-        statusEl.textContent = t('status.error');
+        statusEl.dataset.state = 'error'; statusEl.textContent = t('status.error');
       }
     }
     loadOnce();
-    setTimeout(loadOnce, 600); // quick follow-up for freshness
+    setTimeout(loadOnce, 600); // small follow-up refresh
+
+    // Optional realtime: auto-refresh on new inserts
+    sb.channel('public:messages')
+      .on('postgres_changes', { event:'INSERT', schema:'public', table:'messages' }, () => loadOnce())
+      .subscribe();
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -483,11 +469,34 @@
       };
       if (!entry.text) return;
 
-      // Visual feedback while posting + i18n
       submitBtn.disabled = true;
       submitBtn.classList.add('posting');
       submitBtn.textContent = t('posting');
 
       try {
         await postMessage(entry);
-        await new Promise(r => setTimeout(r, 250)); // give Sheets a
+        await new Promise(r => setTimeout(r, 150));
+        await loadOnce();
+        form.reset();
+        document.getElementById('overlay').removeAttribute('open');
+        location.hash = '#guestbook';
+
+        submitBtn.classList.remove('posting');
+        submitBtn.classList.add('success');
+        submitBtn.textContent = t('posted');
+        setTimeout(() => {
+          submitBtn.classList.remove('success');
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }, 1100);
+      } catch (e) {
+        console.error('Post failed:', e);
+        alert(t('postFail'));
+        submitBtn.classList.remove('posting');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
+  </script>
+</body>
+</html>
