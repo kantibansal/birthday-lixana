@@ -16,6 +16,28 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&family=Italiana&display=swap" rel="stylesheet">
 
+  <!-- Google tag (gtag.js) – Google Ads -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-977929034"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'AW-977929034', {
+      debug_mode: location.hostname === 'localhost'
+    });
+    // Lightweight helpers for SPA tracking
+    function trackPageView(extra){
+      if (!window.gtag) return;
+      gtag('config', 'AW-977929034', Object.assign({
+        page_path: location.pathname + location.search,
+        page_title: document.title
+      }, extra || {}));
+    }
+    function trackEvent(name, params){
+      if (window.gtag) gtag('event', name, params || {});
+    }
+  </script>
+
   <style>
     :root{
       --sage: #88c0a4;
@@ -477,6 +499,8 @@
         url.searchParams.set('lang', valid);
         history.replaceState(null, '', url);
       }
+      // SPA virtual page view for Google Ads
+      trackPageView({ language: valid });
     }
 
     // Initial language: URL param > localStorage > 'en'
@@ -557,6 +581,18 @@
       }
     }
     window.addEventListener('load', makeConfetti);
+
+    // CTA analytics
+    window.addEventListener('load', () => {
+      const callLink = document.querySelector('a[href^="tel:+"]');
+      const smsLink  = document.querySelector('a[href^="sms:+"]');
+      callLink && callLink.addEventListener('click', () =>
+        trackEvent('click_call', { event_category: 'cta', event_label: 'header', language: localStorage.getItem('lang') || 'en' })
+      );
+      smsLink && smsLink.addEventListener('click', () =>
+        trackEvent('click_text', { event_category: 'cta', event_label: 'header', language: localStorage.getItem('lang') || 'en' })
+      );
+    });
   </script>
 
   <!-- Supabase client -->
@@ -659,6 +695,17 @@
         submitBtn.classList.remove('posting');
         submitBtn.classList.add('success');
         submitBtn.textContent = t('posted');
+
+        // Analytics: custom event for successful posts
+        trackEvent('message_posted', {
+          event_category: 'engagement',
+          event_label: 'guestbook',
+          value: 1,
+          language: localStorage.getItem('lang') || 'en'
+        });
+        // If you create a Google Ads conversion action with a label, you can also send:
+        // gtag('event', 'conversion', { send_to: 'AW-977929034/YOUR_LABEL_HERE' });
+
         setTimeout(() => {
           submitBtn.classList.remove('success');
           submitBtn.textContent = originalText;
@@ -666,7 +713,6 @@
         }, 1100);
       } catch (e) {
         console.error('Post failed:', e);
-        // If you see RLS errors here, add an insert policy for anon on the 'messages' table.
         alert(t('status.error'));
         submitBtn.classList.remove('posting');
         submitBtn.disabled = false;
