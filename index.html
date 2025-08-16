@@ -10,16 +10,11 @@
 
   <style>
     :root{
-      --ink:#4a5d52;
-      --ink-2:#5a6d61;
-      --mauve:#9b85ac;
-      --mint:#88c0a4;
-      --mint-2:#7fb098;
-      --mango:#f4a261;
-      --coral:#e76f51;
+      --ink:#4a5d52; --ink-2:#5a6d61;
+      --mauve:#9b85ac; --mint:#88c0a4; --mint-2:#7fb098;
+      --mango:#f4a261; --coral:#e76f51;
       --bg1:#fef6f3; --bg2:#f5e8e4; --bg3:#e8ddd5; --bg4:#dfd5ce; --bg5:#f3ebe7;
-      --card:#ffffff;
-      --ring:rgba(0,0,0,.08);
+      --card:#ffffff; --ring:rgba(0,0,0,.08);
       --shadow:0 10px 40px rgba(244,162,97,.10), 0 2px 10px rgba(136,192,164,.10);
       --radius:20px;
     }
@@ -32,30 +27,32 @@
       overflow-x:hidden;
     }
 
-    /* Decorative background bits */
-    .graffiti-bg{position:fixed;inset:0;pointer-events:none;z-index:1}
-    .graffiti-element{position:absolute;font-size:2rem;opacity:.15;animation:float-rotate 15s ease-in-out infinite}
+    /* ===== Floating graffiti/confetti (z-index 0 so it sits behind content) ===== */
+    .graffiti-bg{position:fixed;inset:0;pointer-events:none;z-index:0}
+    .graffiti-element{position:absolute;font-size:2rem;opacity:.18;animation:float-rotate 15s ease-in-out infinite}
     @keyframes float-rotate{
-      0%,100%{transform:translateY(0) rotate(0deg) scale(1);opacity:.12}
-      25%{transform:translateY(-30px) rotate(90deg) scale(1.1);opacity:.20}
-      50%{transform:translateY(20px) rotate(180deg) scale(.92);opacity:.15}
-      75%{transform:translateY(-10px) rotate(270deg) scale(1.05);opacity:.18}
+      0%,100%{transform:translateY(0) rotate(0deg) scale(1);opacity:.14}
+      25%{transform:translateY(-26px) rotate(90deg) scale(1.1);opacity:.22}
+      50%{transform:translateY(18px) rotate(180deg) scale(.93);opacity:.16}
+      75%{transform:translateY(-10px) rotate(270deg) scale(1.05);opacity:.20}
     }
-    .watercolor{position:absolute;border-radius:50%;filter:blur(40px);opacity:.15;animation:pulse-move 8s ease-in-out infinite}
+    /* soft watercolor blobs */
+    .watercolor{position:absolute;border-radius:50%;filter:blur(40px);opacity:.15;animation:pulse-move 8s ease-in-out infinite;z-index:0}
     .watercolor1{width:300px;height:300px;background:var(--mango);top:10%;right:5%}
     .watercolor2{width:250px;height:250px;background:var(--mauve);bottom:20%;left:10%;animation-delay:2s}
     .watercolor3{width:200px;height:200px;background:var(--mint);top:50%;right:20%;animation-delay:4s}
     @keyframes pulse-move{
       0%,100%{transform:translate(0,0) scale(1);opacity:.15}
-      50%{transform:translate(20px,-20px) scale(1.2);opacity:.25}
+      50%{transform:translate(20px,-20px) scale(1.2);opacity:.24}
     }
-    .bunting{position:fixed;top:80px;left:0;width:100%;height:100px;z-index:2;pointer-events:none}
+    /* bunting */
+    .bunting{position:fixed;top:80px;left:0;width:100%;height:100px;z-index:1;pointer-events:none}
     .bunting-flag{position:absolute;width:0;height:0;border-left:30px solid transparent;border-right:30px solid transparent;animation:sway 3s ease-in-out infinite}
     @keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
 
-    /* Nav */
+    /* Nav is above background */
     nav{
-      position:relative;z-index:100;padding:1.25rem 2rem;
+      position:relative;z-index:3;padding:1.25rem 2rem;
       display:flex;justify-content:space-between;align-items:center;
       background:rgba(255,255,255,.7);backdrop-filter:blur(10px);border-bottom:2px solid rgba(244,162,97,.2)
     }
@@ -68,16 +65,16 @@
     .lang-btn{padding:.45rem 1rem;border:0;background:transparent;color:var(--mint);font-weight:700;letter-spacing:1px;cursor:pointer}
     .lang-btn.active{background:linear-gradient(135deg,var(--mint),var(--mint-2));color:#fff}
 
-    /* Layout */
-    .container{max-width:1300px;margin:2.25rem auto;padding:0 1rem;position:relative;z-index:10}
+    .container{max-width:1300px;margin:2.25rem auto;padding:0 1rem;position:relative;z-index:2}
     .main-card{
-      background:rgba(255,255,255,.95);border-radius:var(--radius);padding:2rem 2rem 2.25rem;
-      box-shadow:var(--shadow);display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:center;position:relative;overflow:visible
+      background:rgba(255,255,255,.95);border-radius:20px;padding:2rem 2rem 2.25rem;
+      box-shadow:var(--shadow);
+      display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:center;position:relative
     }
     @media (max-width:980px){.main-card{grid-template-columns:1fr;gap:2rem}}
 
     /* Cake sparkler */
-    .cake-decoration{position:absolute;top:-46px;right:72px;width:80px;height:100px;z-index:20}
+    .cake-decoration{position:absolute;top:-46px;right:72px;width:80px;height:100px;z-index:4}
     .cake{position:relative;width:60px;height:60px;background:linear-gradient(180deg,var(--mango),var(--coral));border-radius:10px;margin:20px auto 0;box-shadow:0 5px 15px rgba(244,162,97,.3)}
     .cake::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:50px;height:20px;background:#fff;border-radius:50%;box-shadow:inset 0 2px 5px rgba(0,0,0,.1)}
     .sparkler{position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:2px;height:30px;background:#8b7355}
@@ -88,7 +85,6 @@
     @keyframes sparkle{0%,100%{opacity:1;transform:translateX(-50%) scale(1)}50%{opacity:.8;transform:translateX(-50%) scale(1.2)}}
     @keyframes twinkle{0%{opacity:.5;transform:rotate(0) scale(.8)}100%{opacity:1;transform:rotate(180deg) scale(1.2)}}
 
-    /* Left content */
     .celebrate-text{font-size:.9rem;font-weight:700;color:var(--mauve);margin-bottom:1rem;letter-spacing:3px;text-transform:uppercase;display:flex;align-items:center;gap:1rem}
     .celebrate-text::before,.celebrate-text::after{content:'';height:2px;width:26px;background:linear-gradient(90deg,var(--mauve),var(--mango))}
     h1{font-family:'Cormorant Garamond',serif;font-size:3.4rem;font-weight:400;color:var(--ink);margin-bottom:1.1rem;line-height:1.08}
@@ -100,19 +96,16 @@
     .phone-section::before{content:'☎';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:2.4rem;opacity:.12;color:var(--mango)}
     .phone-label{font-size:.78rem;text-transform:uppercase;letter-spacing:2px;color:var(--mint);margin-bottom:.35rem;font-weight:800}
     .phone-number{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--mint),var(--mango));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px}
-
     .action-buttons{display:flex;gap:.75rem;flex-wrap:wrap}
     .btn{padding:1rem 1.9rem;border:2px solid;font-size:.9rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;cursor:pointer;border-radius:999px;transition:.25s;position:relative}
     .btn-call{background:linear-gradient(135deg,var(--mint),var(--mint-2));color:#fff;border-color:transparent;box-shadow:0 5px 20px rgba(136,192,164,.30)}
     .btn-call:hover{transform:translateY(-2px);box-shadow:0 7px 25px rgba(136,192,164,.40)}
-    .btn-call:active{transform:translateY(0)}
     .btn-text{background:#fff;color:var(--mango);border-color:var(--mango)}
     .btn-text:hover{background:rgba(244,162,97,.10);transform:translateY(-2px);box-shadow:0 5px 20px rgba(244,162,97,.20)}
     .btn-message{background:#fff;color:var(--mauve);border-color:var(--mauve)}
     .btn-message:hover{background:rgba(155,133,172,.10);transform:translateY(-2px);box-shadow:0 5px 20px rgba(155,133,172,.20)}
     .btn.loading{opacity:.7;pointer-events:none}
 
-    /* Right content (gallery) */
     .photo-container{padding:1.25rem;background:linear-gradient(135deg,rgba(155,133,172,.06),rgba(244,162,97,.06));border-radius:18px;box-shadow:0 5px 20px rgba(0,0,0,.05)}
     .photo-frame{background:#fff;padding:.8rem;border-radius:14px;box-shadow:inset 0 2px 10px rgba(244,162,97,.10)}
     .main-photo{width:100%;aspect-ratio:16/10;border-radius:10px;overflow:hidden;position:relative}
@@ -123,8 +116,7 @@
     .thumb:hover{transform:scale(1.03);box-shadow:0 5px 15px rgba(136,192,164,.25)}
     .thumb[aria-current="true"]{outline:3px solid var(--mint)}
 
-    /* Guestbook */
-    .guest-wrap{max-width:1300px;margin:1.4rem auto;padding:0 1rem}
+    .guest-wrap{max-width:1300px;margin:1.4rem auto;padding:0 1rem;position:relative;z-index:2}
     .guest-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;margin:.8rem 0 1rem}
     .status{color:#7b7b7b;margin:.2rem 0 .8rem}
     .cards{display:grid;grid-template-columns:repeat(2,minmax(280px,1fr));gap:.9rem}
@@ -135,8 +127,7 @@
     .gwhen{color:#888;font-size:.9rem}
     .gtext{white-space:pre-wrap;line-height:1.45}
 
-    /* Modal */
-    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:200}
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:10}
     .overlay[open]{display:flex}
     .modal{background:#fff;width:min(680px,92vw);border-radius:16px;box-shadow:var(--shadow);padding:18px;border:1.5px solid var(--ring)}
     .modal header{display:flex;align-items:center;justify-content:space-between}
@@ -148,14 +139,10 @@
     textarea{min-height:120px;resize:vertical}
     .modal .actions{display:flex;gap:.6rem;margin-top:.65rem}
     .btn-close{background:#fff;color:#444;border:2px solid #ddd}
-
-    /* Small party emojis */
-    .party-icon{position:absolute;font-size:1.5rem;animation:bounce-rotate 3s ease-in-out infinite}
-    @keyframes bounce-rotate{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(10deg)}}
   </style>
 </head>
 <body>
-  <!-- Decorative background (confetti-like) -->
+  <!-- Floating graffiti / watercolor -->
   <div class="graffiti-bg">
     <div class="graffiti-element" style="top:15%;left:10%;color:var(--mango);">◈</div>
     <div class="graffiti-element" style="top:25%;right:15%;animation-delay:2s;color:var(--mint);">◆</div>
@@ -179,12 +166,12 @@
     <div class="bunting-flag" style="border-bottom:50px solid var(--mango); left:85%; animation-delay:1.6s"></div>
   </div>
 
-  <!-- Navigation -->
+  <!-- Nav -->
   <nav>
-    <div class="logo" data-i18n="brand">Lixana's Birthday</div>
+    <div class="logo">Lixana's Birthday</div>
     <div class="nav-links">
-      <a href="#top" data-i18n="home">Home</a>
-      <a href="#guestbook" data-i18n="guestbook">Guestbook</a>
+      <a href="#top">Home</a>
+      <a href="#guestbook">Guestbook</a>
       <div class="lang-buttons">
         <button class="lang-btn active" id="btnEN">EN</button>
         <button class="lang-btn" id="btnES">ES</button>
@@ -192,44 +179,35 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
+  <!-- Main -->
   <div class="container" id="top">
     <div class="main-card">
-      <!-- Cake sparkler -->
       <div class="cake-decoration">
-        <div class="cake">
-          <div class="sparkler"><div class="spark"></div></div>
-        </div>
+        <div class="cake"><div class="sparkler"><div class="spark"></div></div></div>
       </div>
 
-      <!-- Party emojis -->
-      <div class="party-icon" style="top:20px;left:30px">🎉</div>
-      <div class="party-icon" style="bottom:20px;right:40px">🎈</div>
-      <div class="party-icon" style="top:50%;left:-30px">🎊</div>
-
-      <!-- Left side -->
-      <div class="content-left">
-        <div class="celebrate-text" data-i18n="comeCelebrate">Come celebrate with us</div>
-        <h1><span data-i18n="callOrText">Call or Text</span> Lixana</h1>
+      <div>
+        <div class="celebrate-text">Come celebrate with us</div>
+        <h1><span>Call or Text</span> Lixana</h1>
         <div class="subtitle">
-          <span class="emphasis" data-i18n="wish">Wish</span> <span data-i18n="herHB">her a happy birthday!</span><br/>
-          <span class="excitement" data-i18n="meansWorld">It would mean so much!</span>
+          <span class="emphasis">WISH</span> her a happy birthday!<br/>
+          <span class="excitement">It would mean so much!</span>
         </div>
 
         <div class="phone-section">
-          <div class="phone-label" data-i18n="contactLabel">Contact Number</div>
+          <div class="phone-label">Contact number</div>
           <div class="phone-number">347-647-9499</div>
         </div>
 
         <div class="action-buttons">
-          <a class="btn btn-call" id="callBtn" href="tel:+13476479499" data-i18n="call">Call</a>
-          <a class="btn btn-text" id="textBtn" href="sms:+13476479499" data-i18n="text">Text</a>
-          <button class="btn btn-message" id="openModal" type="button" data-i18n="leaveMsg">Leave Message</button>
+          <a class="btn btn-call" href="tel:+13476479499">Call</a>
+          <a class="btn btn-text" href="sms:+13476479499">Text</a>
+          <button class="btn btn-message" id="openModal" type="button">Leave Message</button>
         </div>
       </div>
 
-      <!-- Right side (gallery) -->
-      <div class="content-right">
+      <!-- Gallery -->
+      <aside>
         <div class="photo-container">
           <div class="photo-frame">
             <figure class="main-photo">
@@ -243,17 +221,17 @@
             </div>
           </div>
         </div>
-      </div>
+      </aside>
     </div>
   </div>
 
   <!-- Guestbook -->
   <div class="guest-wrap" id="guestbook">
-    <h2 class="guest-title" data-i18n="messagesFor">Messages for Lixana</h2>
+    <h2 class="guest-title">Messages for Lixana</h2>
     <div id="status" class="status">Loading messages…</div>
     <div id="cards" class="cards" aria-live="polite"></div>
     <div style="display:flex;justify-content:center;margin:12px 0 18px">
-      <button class="btn btn-message" id="openModal2" type="button" data-i18n="leaveMsg">Leave Message</button>
+      <button class="btn btn-message" id="openModal2" type="button">Leave Message</button>
     </div>
   </div>
 
@@ -261,24 +239,24 @@
   <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
     <div class="modal">
       <header>
-        <h3 id="dialogTitle" data-i18n="leaveAMessage">Leave a message</h3>
-        <button id="closeModal" class="btn btn-close" type="button" data-i18n="close">Close</button>
+        <h3 id="dialogTitle">Leave a message</h3>
+        <button id="closeModal" class="btn btn-close" type="button">Close</button>
       </header>
       <form id="form">
         <div class="row">
           <div>
-            <label for="name" data-i18n="yourName">Your name</label>
+            <label for="name">Your name</label>
             <input id="name" name="name" type="text" placeholder="Jane Doe" required />
           </div>
           <div>
-            <label for="contact" data-i18n="contactOptional">Contact (optional)</label>
+            <label for="contact">Contact (optional)</label>
             <input id="contact" name="contact" type="text" placeholder="phone or email" />
           </div>
         </div>
-        <label for="message" data-i18n="yourMessage">Your message</label>
+        <label for="message">Your message</label>
         <textarea id="message" name="message" placeholder="Write something sweet…" required></textarea>
         <div class="actions">
-          <button class="btn btn-message" type="submit" id="submitBtn" data-i18n="postMessage">Post message</button>
+          <button class="btn btn-message" type="submit" id="submitBtn">Post message</button>
         </div>
       </form>
     </div>
@@ -286,75 +264,37 @@
 
   <!-- Supabase + App -->
   <script type="module">
-    /* =========================
-       CONFIG
-    ========================= */
-    // Supabase (public) — ok to expose anon key in client when RLS is enabled
-    const SUPABASE_URL  = "https://dtxjzcufdjivbaurwgal.supabase.co";
-    const SUPABASE_KEY  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0eGp6Y3VmZGppdmJhdXJ3Z2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzMTMyNzAsImV4cCI6MjA3MDg4OTI3MH0.YVdvxrg_WOvWvftB4vNXzyj6rt2kabGLksDr_mDVyVs";
-    const TABLE          = "messages";
+    /* ===== CONFIG (update if you change project) ===== */
+    const SUPABASE_URL = "https://dtxjzcufdjivbaurwgal.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0eGp6Y3VmZGppdmJhdXJ3Z2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzMTMyNzAsImV4cCI6MjA3MDg4OTI3MH0.YVdvxrg_WOvWvftB4vNXzyj6rt2kabGLksDr_mDVyVs";
+    const TABLE = "messages";
 
-    // i18n strings
-    const STRINGS = {
-      en: {
-        brand:"Lixana's Birthday", home:"Home", guestbook:"Guestbook",
-        comeCelebrate:"Come celebrate with us", callOrText:"Call or Text",
-        wish:"Wish", herHB:"her a happy birthday!", meansWorld:"It would mean so much!",
-        contactLabel:"Contact Number", call:"Call", text:"Text", leaveMsg:"Leave Message",
-        messagesFor:"Messages for Lixana", leaveAMessage:"Leave a message", close:"Close",
-        yourName:"Your name", contactOptional:"Contact (optional)", yourMessage:"Your message",
-        postMessage:"Post message", loading:"Loading messages…", live:"Live guestbook enabled."
-      },
-      es: {
-        brand:"Cumpleaños de Lixana", home:"Inicio", guestbook:"Libro de visitas",
-        comeCelebrate:"Ven a celebrar con nosotros", callOrText:"Llama o escribe a",
-        wish:"¡Desea", herHB:"un feliz cumpleaños!", meansWorld:"¡Significaría muchísimo!",
-        contactLabel:"Número de contacto", call:"Llamar", text:"SMS", leaveMsg:"Dejar mensaje",
-        messagesFor:"Mensajes para Lixana", leaveAMessage:"Deja un mensaje", close:"Cerrar",
-        yourName:"Tu nombre", contactOptional:"Contacto (opcional)", yourMessage:"Tu mensaje",
-        postMessage:"Publicar mensaje", loading:"Cargando mensajes…", live:"Libro de visitas en vivo."
-      }
-    };
-
-    /* =========================
-       GALLERY (auto-rotate + thumbs)
-    ========================= */
-    const hero   = document.getElementById('hero');
+    /* ===== Gallery (auto-rotate with pause on interaction) ===== */
+    const hero = document.getElementById('hero');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
     const sources = ["img/photo1.jpg","img/photo2.jpg","img/photo3.jpg","img/photo4.jpg"];
-    let idx = 0, timer = null, userTouched = false;
+    let idx = 0, timer = null, pause = false;
 
     function show(i){
-      idx = (i+sources.length)%sources.length;
+      idx = (i + sources.length) % sources.length;
       hero.src = sources[idx];
       hero.alt = "Photo " + (idx+1);
       thumbs.forEach(t=>t.removeAttribute('aria-current'));
       thumbs[idx].setAttribute('aria-current','true');
     }
-    function startAuto(){
-      clearInterval(timer);
-      timer = setInterval(()=>{ if(!userTouched) show(idx+1); }, 4200);
-    }
-    thumbs.forEach((btn,i)=>{
-      btn.addEventListener('click', ()=>{ userTouched = true; show(i); });
-    });
-    hero.addEventListener('mouseenter', ()=>userTouched=true);
-    hero.addEventListener('mouseleave', ()=>userTouched=false);
-    show(0); startAuto();
+    thumbs.forEach((b,i)=>b.addEventListener('click', ()=>{ pause = true; show(i); setTimeout(()=>pause=false, 6000);}));
+    hero.addEventListener('mouseenter', ()=>pause = true);
+    hero.addEventListener('mouseleave', ()=>pause = false);
+    show(0); timer = setInterval(()=>{ if(!pause) show(idx+1); }, 4200);
 
-    /* =========================
-       MODAL
-    ========================= */
+    /* ===== Modal ===== */
     const overlay = document.getElementById('overlay');
-    const openers = [document.getElementById('openModal'), document.getElementById('openModal2')];
-    const closer  = document.getElementById('closeModal');
-    openers.forEach(b=> b?.addEventListener('click', ()=> overlay.setAttribute('open','')));
-    closer?.addEventListener('click', ()=> overlay.removeAttribute('open'));
+    document.getElementById('openModal').addEventListener('click', ()=>overlay.setAttribute('open',''));
+    document.getElementById('openModal2').addEventListener('click', ()=>overlay.setAttribute('open',''));
+    document.getElementById('closeModal').addEventListener('click', ()=>overlay.removeAttribute('open'));
     overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.removeAttribute('open'); });
 
-    /* =========================
-       SUPABASE (guestbook)
-    ========================= */
+    /* ===== Guestbook (Supabase with clear error text + local fallback) ===== */
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -364,8 +304,7 @@
     const submitBtn= document.getElementById('submitBtn');
 
     const fmt = ts => new Date(ts).toLocaleString([], {dateStyle:'medium', timeStyle:'short'});
-
-    function sanitize(s){ return String(s||'').replace(/[<>]/g,''); }
+    const sanitize = s => String(s||'').replace(/[<>]/g,'');
 
     function render(list){
       list.sort((a,b)=> new Date(b.time) - new Date(a.time));
@@ -380,47 +319,44 @@
       `).join('') : `<article class="gcard">Be the first to leave a message! 🎉</article>`;
     }
 
-    async function fetchMessages(){
-      const { data, error } = await supabase
-        .from(TABLE)
-        .select("*")
-        .order("time", { ascending: false })
-        .limit(200);
-      if(error) throw error;
-      return data || [];
+    function setStatus(msg){ statusEl.textContent = msg; }
+
+    async function fetchMessagesSupabase(){
+      // Try ordering by "time" (our intended column). If that errors, try "created_at".
+      let res = await supabase.from(TABLE).select("*").order("time", { ascending:false }).limit(200);
+      if(res.error){
+        // Second attempt in case the column is named created_at
+        res = await supabase.from(TABLE).select("*").order("created_at", { ascending:false }).limit(200);
+        if(res.error) throw res.error;
+      }
+      return res.data || [];
+    }
+
+    function fetchMessagesLocal(){
+      try{
+        const raw = localStorage.getItem('guestbook_local') || "[]";
+        return JSON.parse(raw);
+      }catch{ return []; }
+    }
+    function saveMessageLocal(m){
+      const list = fetchMessagesLocal();
+      list.push(m);
+      localStorage.setItem('guestbook_local', JSON.stringify(list));
     }
 
     async function load(){
       try{
-        statusEl.textContent = STRINGS[lang()].loading;
-        render(await fetchMessages());
-        statusEl.textContent = STRINGS[lang()].live + " Supabase.";
-      }catch(e){
-        console.error(e);
-        statusEl.textContent = "Could not load messages.";
+        setStatus("Loading messages…");
+        const list = await fetchMessagesSupabase();
+        render(list);
+        setStatus("Live guestbook enabled via Supabase.");
+      }catch(err){
+        console.error("Supabase load error:", err);
+        setStatus("Could not load messages (using local-only guestbook).");
+        render(fetchMessagesLocal());
       }
     }
     await load();
-
-    // Realtime (INSERT)
-    try{
-      supabase.channel('public:messages')
-        .on('postgres_changes', { event:'INSERT', schema:'public', table:TABLE }, async (payload)=>{
-          // Prepend new message
-          const m = payload.new;
-          const card = document.createElement('article');
-          card.className = 'gcard';
-          card.innerHTML = `
-            <div class="ghead">
-              <div class="gname">${sanitize(m.name)||'Anonymous'}</div>
-              <div class="gwhen">${fmt(m.time)}${m.contact ? ' • '+sanitize(m.contact):''}</div>
-            </div>
-            <div class="gtext">${sanitize(m.text)}</div>
-          `;
-          cardsEl.prepend(card);
-        })
-        .subscribe();
-    }catch(e){ console.warn("Realtime not available:", e); }
 
     form.addEventListener('submit', async (e)=>{
       e.preventDefault();
@@ -430,43 +366,27 @@
         text: (form.elements['message']?.value || '').trim(),
         time: new Date().toISOString()
       };
-      if(!entry.text){ return; }
+      if(!entry.text) return;
       submitBtn.classList.add('loading');
+
       try{
         const { error } = await supabase.from(TABLE).insert(entry);
         if(error) throw error;
+        // Re-fetch from backend so it appears immediately
+        render(await fetchMessagesSupabase());
+        setStatus("Live guestbook enabled via Supabase.");
+      }catch(err){
+        console.warn("Post to Supabase failed, storing locally:", err);
+        saveMessageLocal(entry);
+        render(fetchMessagesLocal());
+        setStatus("Posted locally (backend not reachable).");
+      }finally{
         form.reset();
         overlay.removeAttribute('open');
-        location.hash = '#guestbook';
-      }catch(err){
-        console.error(err);
-        alert('Sorry — could not send your message.');
-      }finally{
         submitBtn.classList.remove('loading');
+        location.hash = '#guestbook';
       }
     });
-
-    /* =========================
-       LANGUAGE TOGGLE
-    ========================= */
-    const btnEN = document.getElementById('btnEN');
-    const btnES = document.getElementById('btnES');
-
-    function lang(){ return localStorage.getItem('lang') || 'en'; }
-    function setLang(l){
-      localStorage.setItem('lang', l);
-      btnEN.classList.toggle('active', l==='en');
-      btnES.classList.toggle('active', l==='es');
-      document.querySelectorAll('[data-i18n]').forEach(el=>{
-        const key = el.getAttribute('data-i18n');
-        el.textContent = STRINGS[l][key] || el.textContent;
-      });
-      // Also update status line if already loaded
-      if(statusEl.textContent.includes('Loading')) statusEl.textContent = STRINGS[l].loading;
-    }
-    btnEN.addEventListener('click', ()=> setLang('en'));
-    btnES.addEventListener('click', ()=> setLang('es'));
-    setLang(lang());
   </script>
 </body>
 </html>
