@@ -1,505 +1,472 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Call or Text Lixana 🎉</title>
-  <meta name="description" content="Wish Lixana a happy birthday — call or text, and leave a message." />
-  <meta name="theme-color" content="#ff7aa2" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://dtxjzcufdjivbaurwgal.supabase.co" crossorigin>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lixana's Birthday Celebration</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&family=Italiana&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#fff8fb; --ink:#1f1a24; --muted:#6c6573;
-      --brand:#ff7aa2; --gold:#ffd166; --card:#fff; --line:#0f0f0f;
-      --shadow:0 12px 30px rgba(0,0,0,.12);
+      --ink:#4a5d52;
+      --ink-2:#5a6d61;
+      --mauve:#9b85ac;
+      --mint:#88c0a4;
+      --mint-2:#7fb098;
+      --mango:#f4a261;
+      --coral:#e76f51;
+      --bg1:#fef6f3; --bg2:#f5e8e4; --bg3:#e8ddd5; --bg4:#dfd5ce; --bg5:#f3ebe7;
+      --card:#ffffff;
+      --ring:rgba(0,0,0,.08);
+      --shadow:0 10px 40px rgba(244,162,97,.10), 0 2px 10px rgba(136,192,164,.10);
+      --radius:20px;
     }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
     body{
-      margin:0; color:var(--ink);
-      background:
-        radial-gradient(60% 70% at 12% 8%, #fff0c2, transparent 60%),
-        radial-gradient(60% 70% at 88% -10%, #ffe1ea, transparent 60%),
-        linear-gradient(180deg, #fff2f7, #fff);
-      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-      display:flex; flex-direction:column; align-items:center;
-    }
-
-    .container{width:min(1400px,96vw); margin:0 auto}
-    @media (min-width:1600px){ .container{ width:min(1700px,92vw) } }
-
-    header{width:100%}
-    .header-inner{padding:18px 0; display:flex; align-items:center; justify-content:space-between; gap:12px}
-    .brand{font-family:'Dancing Script',cursive; font-size:clamp(28px,4vw,42px); color:var(--ink)}
-    nav{display:flex; align-items:center; gap:14px}
-    nav a{text-decoration:none; color:var(--ink); font-weight:600; opacity:.75}
-    nav a:hover{opacity:1}
-
-    .lang-toggle{display:flex; gap:6px; align-items:center}
-    .lang-btn{
-      appearance:none; border:1.5px solid var(--line); background:#fff; color:#111;
-      border-radius:999px; padding:.35rem .7rem; font-weight:800; font-size:.9rem; cursor:pointer;
-    }
-    .lang-btn[aria-pressed="true"]{background:var(--brand); color:#fff; border-color:#111}
-
-    .card{
-      margin:16px 0 28px;
-      background:linear-gradient(135deg,#fffafc,#fff 45%,#fff8ec);
-      border:1.5px solid var(--line); border-radius:18px;
-      box-shadow:var(--shadow);
-      display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(16px,2.4vw,28px);
-      padding:clamp(16px,2.5vw,28px);
-    }
-    @media (max-width:900px){ .card{ grid-template-columns:1fr; } }
-
-    .left .eyebrow{font-weight:600; color:var(--muted)}
-    .title{
-      font-family:'Dancing Script',cursive;
-      font-size:clamp(38px,5.4vw,64px); line-height:1.04; margin:.2rem 0;
-      color:var(--ink); text-wrap:balance;
-    }
-    @media (min-width:1600px){ .title{ font-size:clamp(52px,4.8vw,88px) } }
-
-    /* Bigger, bolder sub-headline */
-    .sub{
+      font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
       color:var(--ink);
-      margin:.35rem 0 1.1rem;
-      font-size:clamp(20px, 1.8vw, 28px);
-      font-weight:700;
-      letter-spacing:.2px;
-      text-wrap:balance;
+      background:linear-gradient(180deg,var(--bg1) 0%,var(--bg2) 25%,var(--bg3) 50%,var(--bg4) 75%,var(--bg5) 100%);
+      overflow-x:hidden;
     }
 
-    .cta{display:flex; flex-wrap:wrap; gap:.8rem; align-items:center}
-    .btn{appearance:none; border:0; border-radius:999px; padding:.9rem 1.2rem; font-weight:700;
-      text-decoration:none; display:inline-flex; align-items:center; gap:.6rem; cursor:pointer;
-      box-shadow:0 10px 18px rgba(0,0,0,.14); transition:transform .08s ease, filter .15s ease, background .15s ease}
-    .btn:active{ transform:translateY(1px) }
-    .btn:disabled{ filter:grayscale(.2); opacity:.85; cursor:not-allowed }
-    .btn.posting{ background:#6b7280 !important; color:#fff !important }
-    .btn.success{ background:#22c55e !important; color:#fff !important }
-    .btn-dark{background:#111; color:#fff}
-    .btn-gold{background:var(--gold); color:#111}
-    .btn-pink{background:var(--brand); color:#fff}
-    .number{font-weight:800; letter-spacing:.5px}
+    /* Decorative background bits */
+    .graffiti-bg{position:fixed;inset:0;pointer-events:none;z-index:1}
+    .graffiti-element{position:absolute;font-size:2rem;opacity:.15;animation:float-rotate 15s ease-in-out infinite}
+    @keyframes float-rotate{
+      0%,100%{transform:translateY(0) rotate(0deg) scale(1);opacity:.12}
+      25%{transform:translateY(-30px) rotate(90deg) scale(1.1);opacity:.20}
+      50%{transform:translateY(20px) rotate(180deg) scale(.92);opacity:.15}
+      75%{transform:translateY(-10px) rotate(270deg) scale(1.05);opacity:.18}
+    }
+    .watercolor{position:absolute;border-radius:50%;filter:blur(40px);opacity:.15;animation:pulse-move 8s ease-in-out infinite}
+    .watercolor1{width:300px;height:300px;background:var(--mango);top:10%;right:5%}
+    .watercolor2{width:250px;height:250px;background:var(--mauve);bottom:20%;left:10%;animation-delay:2s}
+    .watercolor3{width:200px;height:200px;background:var(--mint);top:50%;right:20%;animation-delay:4s}
+    @keyframes pulse-move{
+      0%,100%{transform:translate(0,0) scale(1);opacity:.15}
+      50%{transform:translate(20px,-20px) scale(1.2);opacity:.25}
+    }
+    .bunting{position:fixed;top:80px;left:0;width:100%;height:100px;z-index:2;pointer-events:none}
+    .bunting-flag{position:absolute;width:0;height:0;border-left:30px solid transparent;border-right:30px solid transparent;animation:sway 3s ease-in-out infinite}
+    @keyframes sway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
 
-    .frame{border:1.5px solid var(--line); border-radius:12px; background:#fff; padding:12px; display:grid; gap:10px}
-    .hero{border:1.5px solid var(--line); border-radius:10px; overflow:hidden; aspect-ratio:16 / 10}
-    @media (min-width:1600px){ .hero{ aspect-ratio:16 / 9 } }
-    .hero img{width:100%; height:100%; object-fit:cover; display:block; transition:opacity .5s ease; opacity:1}
-    .thumbs{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
-    .thumb{width:110px; height:70px; border-radius:8px; border:1.5px solid var(--line); overflow:hidden; cursor:pointer; background:#fff}
-    .thumb img{width:100%; height:100%; object-fit:cover; display:block}
-    .thumb[aria-current="true"]{outline:3px solid var(--brand)}
-    @media (min-width:1600px){ .thumb{ width:140px; height:88px } }
+    /* Nav */
+    nav{
+      position:relative;z-index:100;padding:1.25rem 2rem;
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(255,255,255,.7);backdrop-filter:blur(10px);border-bottom:2px solid rgba(244,162,97,.2)
+    }
+    .logo{font-family:'Italiana',serif;font-size:1.85rem;letter-spacing:2px;background:linear-gradient(135deg,var(--mango),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .nav-links{display:flex;gap:2rem;align-items:center}
+    .nav-links a{color:var(--mint);text-decoration:none;font-weight:600;font-size:.92rem;letter-spacing:1px;position:relative;text-transform:uppercase}
+    .nav-links a::after{content:'';position:absolute;bottom:-6px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--mango),var(--coral));transition:width .3s}
+    .nav-links a:hover::after{width:100%}
+    .lang-buttons{display:flex;border:2px solid var(--mint);border-radius:25px;overflow:hidden}
+    .lang-btn{padding:.45rem 1rem;border:0;background:transparent;color:var(--mint);font-weight:700;letter-spacing:1px;cursor:pointer}
+    .lang-btn.active{background:linear-gradient(135deg,var(--mint),var(--mint-2));color:#fff}
 
-    .guest{margin:28px 0 54px}
-    .hand{font-family:'Dancing Script',cursive; font-size:clamp(28px,4vw,44px)}
-    .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px}
-    .gcard{background:var(--card); border:1.5px solid var(--line); border-radius:12px; padding:12px}
-    .gcard h4{margin:.2rem 0 .2rem; font-size:1.05rem}
-    .gcard .when{font-size:.86rem; color:var(--muted)}
-    .gcard p{margin:.4rem 0 0; white-space:pre-wrap; font-size:1rem}
+    /* Layout */
+    .container{max-width:1300px;margin:2.25rem auto;padding:0 1rem;position:relative;z-index:10}
+    .main-card{
+      background:rgba(255,255,255,.95);border-radius:var(--radius);padding:2rem 2rem 2.25rem;
+      box-shadow:var(--shadow);display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:center;position:relative;overflow:visible
+    }
+    @media (max-width:980px){.main-card{grid-template-columns:1fr;gap:2rem}}
 
-    .overlay{position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:50}
+    /* Cake sparkler */
+    .cake-decoration{position:absolute;top:-46px;right:72px;width:80px;height:100px;z-index:20}
+    .cake{position:relative;width:60px;height:60px;background:linear-gradient(180deg,var(--mango),var(--coral));border-radius:10px;margin:20px auto 0;box-shadow:0 5px 15px rgba(244,162,97,.3)}
+    .cake::before{content:'';position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:50px;height:20px;background:#fff;border-radius:50%;box-shadow:inset 0 2px 5px rgba(0,0,0,.1)}
+    .sparkler{position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:2px;height:30px;background:#8b7355}
+    .spark{position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:20px;height:20px;animation:sparkle .5s ease-in-out infinite}
+    .spark::before,.spark::after{content:'✦';position:absolute;color:#ffd700;font-size:1.2rem;animation:twinkle .3s ease-in-out infinite alternate}
+    .spark::before{top:-5px;left:-10px;animation-delay:.1s}
+    .spark::after{top:-5px;right:-10px;animation-delay:.2s}
+    @keyframes sparkle{0%,100%{opacity:1;transform:translateX(-50%) scale(1)}50%{opacity:.8;transform:translateX(-50%) scale(1.2)}}
+    @keyframes twinkle{0%{opacity:.5;transform:rotate(0) scale(.8)}100%{opacity:1;transform:rotate(180deg) scale(1.2)}}
+
+    /* Left content */
+    .celebrate-text{font-size:.9rem;font-weight:700;color:var(--mauve);margin-bottom:1rem;letter-spacing:3px;text-transform:uppercase;display:flex;align-items:center;gap:1rem}
+    .celebrate-text::before,.celebrate-text::after{content:'';height:2px;width:26px;background:linear-gradient(90deg,var(--mauve),var(--mango))}
+    h1{font-family:'Cormorant Garamond',serif;font-size:3.4rem;font-weight:400;color:var(--ink);margin-bottom:1.1rem;line-height:1.08}
+    h1 span{font-style:italic;font-weight:600;background:linear-gradient(135deg,var(--mango),var(--coral));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .subtitle{font-weight:400;font-size:1.15rem;color:var(--ink-2);line-height:1.75;margin-bottom:1.75rem}
+    .subtitle .emphasis{font-weight:800;font-size:1.12rem;background:linear-gradient(135deg,var(--coral),var(--mango));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-transform:uppercase;letter-spacing:1px}
+    .subtitle .excitement{font-weight:700;color:var(--mint);font-style:italic}
+    .phone-section{margin-bottom:1.6rem;padding:1rem;background:linear-gradient(135deg,rgba(136,192,164,.12),rgba(244,162,97,.12));border-radius:14px;border-left:4px solid var(--mint);position:relative}
+    .phone-section::before{content:'☎';position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:2.4rem;opacity:.12;color:var(--mango)}
+    .phone-label{font-size:.78rem;text-transform:uppercase;letter-spacing:2px;color:var(--mint);margin-bottom:.35rem;font-weight:800}
+    .phone-number{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--mint),var(--mango));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px}
+
+    .action-buttons{display:flex;gap:.75rem;flex-wrap:wrap}
+    .btn{padding:1rem 1.9rem;border:2px solid;font-size:.9rem;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;cursor:pointer;border-radius:999px;transition:.25s;position:relative}
+    .btn-call{background:linear-gradient(135deg,var(--mint),var(--mint-2));color:#fff;border-color:transparent;box-shadow:0 5px 20px rgba(136,192,164,.30)}
+    .btn-call:hover{transform:translateY(-2px);box-shadow:0 7px 25px rgba(136,192,164,.40)}
+    .btn-call:active{transform:translateY(0)}
+    .btn-text{background:#fff;color:var(--mango);border-color:var(--mango)}
+    .btn-text:hover{background:rgba(244,162,97,.10);transform:translateY(-2px);box-shadow:0 5px 20px rgba(244,162,97,.20)}
+    .btn-message{background:#fff;color:var(--mauve);border-color:var(--mauve)}
+    .btn-message:hover{background:rgba(155,133,172,.10);transform:translateY(-2px);box-shadow:0 5px 20px rgba(155,133,172,.20)}
+    .btn.loading{opacity:.7;pointer-events:none}
+
+    /* Right content (gallery) */
+    .photo-container{padding:1.25rem;background:linear-gradient(135deg,rgba(155,133,172,.06),rgba(244,162,97,.06));border-radius:18px;box-shadow:0 5px 20px rgba(0,0,0,.05)}
+    .photo-frame{background:#fff;padding:.8rem;border-radius:14px;box-shadow:inset 0 2px 10px rgba(244,162,97,.10)}
+    .main-photo{width:100%;aspect-ratio:16/10;border-radius:10px;overflow:hidden;position:relative}
+    .main-photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .photo-thumbnails{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:.65rem}
+    .thumb{aspect-ratio:16/10;border:2px solid rgba(244,162,97,.2);border-radius:8px;overflow:hidden;cursor:pointer;transition:.2s;background:#fff}
+    .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .thumb:hover{transform:scale(1.03);box-shadow:0 5px 15px rgba(136,192,164,.25)}
+    .thumb[aria-current="true"]{outline:3px solid var(--mint)}
+
+    /* Guestbook */
+    .guest-wrap{max-width:1300px;margin:1.4rem auto;padding:0 1rem}
+    .guest-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;margin:.8rem 0 1rem}
+    .status{color:#7b7b7b;margin:.2rem 0 .8rem}
+    .cards{display:grid;grid-template-columns:repeat(2,minmax(280px,1fr));gap:.9rem}
+    @media (max-width:980px){.cards{grid-template-columns:1fr}}
+    .gcard{background:#fff;border:1.5px solid var(--ring);border-radius:12px;padding:12px}
+    .ghead{display:flex;justify-content:space-between;gap:8px;margin-bottom:.25rem}
+    .gname{font-weight:800}
+    .gwhen{color:#888;font-size:.9rem}
+    .gtext{white-space:pre-wrap;line-height:1.45}
+
+    /* Modal */
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:200}
     .overlay[open]{display:flex}
-    .modal{background:#fff; width:min(680px,92vw); border-radius:16px; box-shadow:var(--shadow); padding:18px; border:1.5px solid var(--line)}
-    .modal header{display:flex; align-items:center; justify-content:space-between}
-    .modal h3{margin:.3rem 0; font-family:'Dancing Script',cursive; font-size:36px}
-    form .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-    @media (max-width:640px){ form .row{ grid-template-columns:1fr } }
-    label{font-weight:600; display:block; margin:.6rem 0 .25rem}
-    input[type="text"], textarea{width:100%; padding:.75rem .9rem; border-radius:10px; border:2px solid #ccc; font:inherit; outline-color:var(--brand); background:#fffdfd}
-    textarea{min-height:120px; resize:vertical}
+    .modal{background:#fff;width:min(680px,92vw);border-radius:16px;box-shadow:var(--shadow);padding:18px;border:1.5px solid var(--ring)}
+    .modal header{display:flex;align-items:center;justify-content:space-between}
+    .modal h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem}
+    form .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:.6rem}
+    @media (max-width:640px){form .row{grid-template-columns:1fr}}
+    label{font-weight:700;display:block;margin:.6rem 0 .25rem}
+    input[type="text"], textarea{width:100%;padding:.75rem .9rem;border-radius:10px;border:2px solid #ccc;font:inherit;outline-color:var(--mango);background:#fffdfd}
+    textarea{min-height:120px;resize:vertical}
+    .modal .actions{display:flex;gap:.6rem;margin-top:.65rem}
+    .btn-close{background:#fff;color:#444;border:2px solid #ddd}
 
-    footer{width:100%; padding:20px 0 36px; text-align:center; color:var(--muted)}
-
-    .sticky{position:fixed; left:50%; bottom:14px; translate:-50% 0; z-index:60; display:none; gap:.6rem}
-    @media (max-width:760px){ .sticky{ display:flex } }
-
-    .confetti{position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0}
-    .confetti span{position:absolute; top:-10vh; font-size:clamp(16px,3vw,22px); animation:fall linear var(--d) infinite; left:var(--x)}
-    @keyframes fall{0%{transform:translateY(-10vh) rotate(0); opacity:0} 10%{opacity:1} 100%{transform:translateY(110vh) rotate(360deg); opacity:0}}
-
-    /* Mobile poster face tweaks */
-    @media (max-width: 480px){
-      html, body { font-size:18px }
-      .container{ width:min(460px, 94vw) }
-      .title{ font-size: clamp(40px, 9vw, 48px); text-align:center }
-      .sub{ font-size: clamp(22px, 6vw, 26px); text-align:center }
-      .cta{ flex-direction:column; align-items:stretch }
-      .btn{ width:100%; justify-content:center; font-size:18px }
-      .btn-xl{ padding:1.05rem 1.3rem; font-size:1.15rem; height:64px; width:100%; justify-content:center; }
-      .left{ text-align:center }
-      .number{ font-size:22px }
-      .thumbs{ display:none }
-      .card{ padding:18px; gap:18px }
-      .guest{ margin:18px 0 72px }
-    }
+    /* Small party emojis */
+    .party-icon{position:absolute;font-size:1.5rem;animation:bounce-rotate 3s ease-in-out infinite}
+    @keyframes bounce-rotate{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(10deg)}}
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="header-inner">
-        <div class="brand" data-i18n="brand">Lixana’s Birthday</div>
-        <nav>
-          <a href="#top" data-i18n="nav.home">Home</a>
-          <a href="#guestbook" data-i18n="nav.guestbook">Guestbook</a>
-          <div class="lang-toggle" aria-label="Language">
-            <button class="lang-btn" id="btnEN" data-lang="en" aria-pressed="true">EN</button>
-            <button class="lang-btn" id="btnES" data-lang="es" aria-pressed="false">ES</button>
-          </div>
-        </nav>
-      </div>
-    </header>
-
-    <main id="top">
-      <section class="card">
-        <div class="left">
-          <div class="eyebrow" data-i18n="eyebrow">Come celebrate with us</div>
-          <h1 class="title" data-i18n="title">Call or Text Lixana</h1>
-          <p class="sub" data-i18n="sub">Wish her a HAPPY Birthday! It would mean so much!</p>
-          <div class="cta">
-            <a class="btn btn-dark btn-xl" href="tel:+13476479499" data-i18n="btn.call">📞 Call</a>
-            <a class="btn btn-gold btn-xl" href="sms:+13476479499" data-i18n="btn.text">💬 Text</a>
-            <button class="btn btn-pink btn-xl" id="openModal" type="button" data-i18n="btn.leave">✍️ Leave a Message</button>
-          </div>
-          <p style="color:var(--muted); margin-top:.8rem; text-align:center;">
-            <span data-i18n="numberLabel">Number:</span> <span class="number">347-647-9499</span>
-          </p>
-        </div>
-
-        <aside class="frame" aria-label="Photo gallery">
-          <figure class="hero">
-            <img id="hero" src="img/photo1.jpg" alt="Lixana photo" loading="eager" decoding="async" />
-          </figure>
-          <div class="thumbs">
-            <button class="thumb" aria-current="true"><img src="img/photo1-thumb.jpg" alt="Photo 1" loading="lazy" decoding="async" /></button>
-            <button class="thumb"><img src="img/photo2-thumb.jpg" alt="Photo 2" loading="lazy" decoding="async" /></button>
-            <button class="thumb"><img src="img/photo3-thumb.jpg" alt="Photo 3" loading="lazy" decoding="async" /></button>
-            <button class="thumb"><img src="img/photo4-thumb.jpg" alt="Photo 4" loading="lazy" decoding="async" /></button>
-          </div>
-        </aside>
-      </section>
-
-      <section class="guest" id="guestbook">
-        <h2 class="hand" data-i18n="guestbook.title">Messages for Lixana</h2>
-        <div id="status" style="color:var(--muted)" data-i18n="status.loading">Loading messages…</div>
-        <div id="cards" class="cards" aria-live="polite" style="margin-top:12px"></div>
-        <div style="margin-top:16px; display:flex; justify-content:center;">
-          <button class="btn btn-pink btn-xl" id="openModal2" type="button" data-i18n="btn.leave">✍️ Leave a Message</button>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <span data-i18n="footer.prefix">Made with ❤️ — Call or text</span> <strong>347-647-9499</strong>.
-    </footer>
+  <!-- Decorative background (confetti-like) -->
+  <div class="graffiti-bg">
+    <div class="graffiti-element" style="top:15%;left:10%;color:var(--mango);">◈</div>
+    <div class="graffiti-element" style="top:25%;right:15%;animation-delay:2s;color:var(--mint);">◆</div>
+    <div class="graffiti-element" style="bottom:30%;left:20%;animation-delay:4s;color:var(--mauve);">◇</div>
+    <div class="graffiti-element" style="top:60%;right:25%;animation-delay:1s;color:var(--coral);">◈</div>
+    <div class="graffiti-element" style="bottom:15%;right:10%;animation-delay:3s;color:var(--mint);">✦</div>
+    <div class="graffiti-element" style="top:40%;left:5%;animation-delay:5s;color:var(--mango);">◉</div>
+  </div>
+  <div class="watercolor watercolor1"></div>
+  <div class="watercolor watercolor2"></div>
+  <div class="watercolor watercolor3"></div>
+  <div class="bunting">
+    <div class="bunting-flag" style="border-bottom:50px solid var(--mango); left:5%"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--mint); left:15%; animation-delay:.2s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--mauve); left:25%; animation-delay:.4s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--coral); left:35%; animation-delay:.6s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--mango); left:45%; animation-delay:.8s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--mint); left:55%; animation-delay:1s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--mauve); left:65%; animation-delay:1.2s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--coral); left:75%; animation-delay:1.4s"></div>
+    <div class="bunting-flag" style="border-bottom:50px solid var(--mango); left:85%; animation-delay:1.6s"></div>
   </div>
 
-  <div class="sticky">
-    <a class="btn btn-dark" href="tel:+13476479499" data-i18n="btn.call">📞 Call</a>
-    <a class="btn btn-gold" href="sms:+13476479499" data-i18n="btn.text">💬 Text</a>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo" data-i18n="brand">Lixana's Birthday</div>
+    <div class="nav-links">
+      <a href="#top" data-i18n="home">Home</a>
+      <a href="#guestbook" data-i18n="guestbook">Guestbook</a>
+      <div class="lang-buttons">
+        <button class="lang-btn active" id="btnEN">EN</button>
+        <button class="lang-btn" id="btnES">ES</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container" id="top">
+    <div class="main-card">
+      <!-- Cake sparkler -->
+      <div class="cake-decoration">
+        <div class="cake">
+          <div class="sparkler"><div class="spark"></div></div>
+        </div>
+      </div>
+
+      <!-- Party emojis -->
+      <div class="party-icon" style="top:20px;left:30px">🎉</div>
+      <div class="party-icon" style="bottom:20px;right:40px">🎈</div>
+      <div class="party-icon" style="top:50%;left:-30px">🎊</div>
+
+      <!-- Left side -->
+      <div class="content-left">
+        <div class="celebrate-text" data-i18n="comeCelebrate">Come celebrate with us</div>
+        <h1><span data-i18n="callOrText">Call or Text</span> Lixana</h1>
+        <div class="subtitle">
+          <span class="emphasis" data-i18n="wish">Wish</span> <span data-i18n="herHB">her a happy birthday!</span><br/>
+          <span class="excitement" data-i18n="meansWorld">It would mean so much!</span>
+        </div>
+
+        <div class="phone-section">
+          <div class="phone-label" data-i18n="contactLabel">Contact Number</div>
+          <div class="phone-number">347-647-9499</div>
+        </div>
+
+        <div class="action-buttons">
+          <a class="btn btn-call" id="callBtn" href="tel:+13476479499" data-i18n="call">Call</a>
+          <a class="btn btn-text" id="textBtn" href="sms:+13476479499" data-i18n="text">Text</a>
+          <button class="btn btn-message" id="openModal" type="button" data-i18n="leaveMsg">Leave Message</button>
+        </div>
+      </div>
+
+      <!-- Right side (gallery) -->
+      <div class="content-right">
+        <div class="photo-container">
+          <div class="photo-frame">
+            <figure class="main-photo">
+              <img id="hero" src="img/photo1.jpg" alt="Lixana photo" loading="eager"/>
+            </figure>
+            <div class="photo-thumbnails" id="thumbs">
+              <button class="thumb" aria-current="true"><img src="img/photo1-thumb.jpg" alt="Photo 1 thumbnail" loading="lazy"/></button>
+              <button class="thumb"><img src="img/photo2-thumb.jpg" alt="Photo 2 thumbnail" loading="lazy"/></button>
+              <button class="thumb"><img src="img/photo3-thumb.jpg" alt="Photo 3 thumbnail" loading="lazy"/></button>
+              <button class="thumb"><img src="img/photo4-thumb.jpg" alt="Photo 4 thumbnail" loading="lazy"/></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guestbook -->
+  <div class="guest-wrap" id="guestbook">
+    <h2 class="guest-title" data-i18n="messagesFor">Messages for Lixana</h2>
+    <div id="status" class="status">Loading messages…</div>
+    <div id="cards" class="cards" aria-live="polite"></div>
+    <div style="display:flex;justify-content:center;margin:12px 0 18px">
+      <button class="btn btn-message" id="openModal2" type="button" data-i18n="leaveMsg">Leave Message</button>
+    </div>
   </div>
 
   <!-- Modal -->
   <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
     <div class="modal">
       <header>
-        <h3 id="dialogTitle" data-i18n="modal.title">Leave a message</h3>
-        <button id="closeModal" class="btn btn-pink" type="button" data-i18n="modal.close">Close</button>
+        <h3 id="dialogTitle" data-i18n="leaveAMessage">Leave a message</h3>
+        <button id="closeModal" class="btn btn-close" type="button" data-i18n="close">Close</button>
       </header>
       <form id="form">
         <div class="row">
           <div>
-            <label for="name" data-i18n="form.name">Your name</label>
-            <input id="name" name="name" type="text" placeholder="Jane Doe" />
+            <label for="name" data-i18n="yourName">Your name</label>
+            <input id="name" name="name" type="text" placeholder="Jane Doe" required />
           </div>
           <div>
-            <label for="contact" data-i18n="form.contact">Contact (optional)</label>
-            <input id="contact" name="contact" type="text" placeholder="phone or email" data-i18n-placeholder="ph.contact">
+            <label for="contact" data-i18n="contactOptional">Contact (optional)</label>
+            <input id="contact" name="contact" type="text" placeholder="phone or email" />
           </div>
         </div>
-        <label for="message" data-i18n="form.message">Your message</label>
-        <textarea id="message" name="message" placeholder="Write something sweet…" data-i18n-placeholder="ph.message"></textarea>
-        <div class="cta" style="margin-top:10px">
-          <button class="btn btn-pink" type="submit" data-i18n="form.post">Post message</button>
+        <label for="message" data-i18n="yourMessage">Your message</label>
+        <textarea id="message" name="message" placeholder="Write something sweet…" required></textarea>
+        <div class="actions">
+          <button class="btn btn-message" type="submit" id="submitBtn" data-i18n="postMessage">Post message</button>
         </div>
       </form>
     </div>
   </div>
 
-  <div class="confetti" aria-hidden="true" id="confetti"></div>
+  <!-- Supabase + App -->
+  <script type="module">
+    /* =========================
+       CONFIG
+    ========================= */
+    // Supabase (public) — ok to expose anon key in client when RLS is enabled
+    const SUPABASE_URL  = "https://dtxjzcufdjivbaurwgal.supabase.co";
+    const SUPABASE_KEY  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0eGp6Y3VmZGppdmJhdXJ3Z2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzMTMyNzAsImV4cCI6MjA3MDg4OTI3MH0.YVdvxrg_WOvWvftB4vNXzyj6rt2kabGLksDr_mDVyVs";
+    const TABLE          = "messages";
 
-  <!-- i18n with updated sub-text -->
-  <script>
-    const I18N = {
+    // i18n strings
+    const STRINGS = {
       en: {
-        pageTitle: "Call or Text Lixana 🎉",
-        metaDesc: "Wish Lixana a happy birthday — call or text, and leave a message.",
-        brand: "Lixana’s Birthday",
-        "nav.home": "Home",
-        "nav.guestbook": "Guestbook",
-        eyebrow: "Come celebrate with us",
-        title: "Call or Text Lixana",
-        sub: "Wish her a HAPPY Birthday! It would mean so much!",
-        "btn.call": "📞 Call",
-        "btn.text": "💬 Text",
-        "btn.leave": "✍️ Leave a Message",
-        numberLabel: "Number:",
-        "guestbook.title": "Messages for Lixana",
-        "status.loading": "Loading messages…",
-        "status.live": "Live guestbook enabled via Supabase.",
-        "status.error": "Could not reach backend. Please try again.",
-        empty: "Be the first to leave a message! 🎉",
-        "modal.title": "Leave a message",
-        "modal.close": "Close",
-        "form.name": "Your name",
-        "form.contact": "Contact (optional)",
-        "form.message": "Your message",
-        "form.post": "Post message",
-        "ph.contact": "phone or email",
-        "ph.message": "Write something sweet…",
-        "footer.prefix": "Made with ❤️ — Call or text",
-        posting: "Posting…",
-        posted: "Posted!",
-        postFail: "Sorry — could not send your message. Please try again."
+        brand:"Lixana's Birthday", home:"Home", guestbook:"Guestbook",
+        comeCelebrate:"Come celebrate with us", callOrText:"Call or Text",
+        wish:"Wish", herHB:"her a happy birthday!", meansWorld:"It would mean so much!",
+        contactLabel:"Contact Number", call:"Call", text:"Text", leaveMsg:"Leave Message",
+        messagesFor:"Messages for Lixana", leaveAMessage:"Leave a message", close:"Close",
+        yourName:"Your name", contactOptional:"Contact (optional)", yourMessage:"Your message",
+        postMessage:"Post message", loading:"Loading messages…", live:"Live guestbook enabled."
       },
       es: {
-        pageTitle: "Llama o envía SMS a Lixana 🎉",
-        metaDesc: "Felicita a Lixana: llama, envía SMS o deja un mensaje.",
-        brand: "Cumpleaños de Lixana",
-        "nav.home": "Inicio",
-        "nav.guestbook": "Libro de visitas",
-        eyebrow: "Ven a celebrar con nosotros",
-        title: "Llamar o enviar SMS a Lixana",
-        sub: "¡Deséale un FELIZ cumpleaños! ¡Le haría mucha ilusión!",
-        "btn.call": "📞 Llamar",
-        "btn.text": "💬 Enviar SMS",
-        "btn.leave": "✍️ Dejar un mensaje",
-        numberLabel: "Número:",
-        "guestbook.title": "Mensajes para Lixana",
-        "status.loading": "Cargando mensajes…",
-        "status.live": "Libro de visitas en vivo con Supabase.",
-        "status.error": "No se pudo conectar. Inténtalo de nuevo.",
-        empty: "¡Sé la primera persona en dejar un mensaje! 🎉",
-        "modal.title": "Dejar un mensaje",
-        "modal.close": "Cerrar",
-        "form.name": "Tu nombre",
-        "form.contact": "Contacto (opcional)",
-        "form.message": "Tu mensaje",
-        "form.post": "Publicar mensaje",
-        "ph.contact": "teléfono o correo",
-        "ph.message": "Escribe algo bonito…",
-        "footer.prefix": "Hecho con ❤️ — Llama o envía SMS",
-        posting: "Publicando…",
-        posted: "¡Publicado!",
-        postFail: "No se pudo enviar el mensaje. Intenta de nuevo."
+        brand:"Cumpleaños de Lixana", home:"Inicio", guestbook:"Libro de visitas",
+        comeCelebrate:"Ven a celebrar con nosotros", callOrText:"Llama o escribe a",
+        wish:"¡Desea", herHB:"un feliz cumpleaños!", meansWorld:"¡Significaría muchísimo!",
+        contactLabel:"Número de contacto", call:"Llamar", text:"SMS", leaveMsg:"Dejar mensaje",
+        messagesFor:"Mensajes para Lixana", leaveAMessage:"Deja un mensaje", close:"Cerrar",
+        yourName:"Tu nombre", contactOptional:"Contacto (opcional)", yourMessage:"Tu mensaje",
+        postMessage:"Publicar mensaje", loading:"Cargando mensajes…", live:"Libro de visitas en vivo."
       }
     };
 
-    function applyI18n(lang){
-      const dict = I18N[lang] || I18N.en;
-      document.querySelectorAll("[data-i18n]").forEach(el=>{
-        const key = el.getAttribute("data-i18n");
-        if (dict[key] != null) el.textContent = dict[key];
-      });
-      document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
-        const key = el.getAttribute("data-i18n-placeholder");
-        if (dict[key] != null) el.setAttribute("placeholder", dict[key]);
-      });
-      document.documentElement.lang = lang;
-      document.title = dict.pageTitle || document.title;
-      const m = document.querySelector('meta[name="description"]');
-      if (m && dict.metaDesc) m.setAttribute("content", dict.metaDesc);
-      document.getElementById("btnEN").setAttribute("aria-pressed", lang==='en' ? 'true' : 'false');
-      document.getElementById("btnES").setAttribute("aria-pressed", lang==='es' ? 'true' : 'false');
-      const se = document.getElementById('status');
-      if (se) {
-        if (se.dataset.state === 'loading') se.textContent = dict["status.loading"];
-        else if (se.dataset.state === 'live')  se.textContent = dict["status.live"];
-        else if (se.dataset.state === 'error') se.textContent = dict["status.error"];
-      }
-    }
-    function t(key){ const lang = localStorage.getItem('lang') || 'en'; return (I18N[lang] && I18N[lang][key]) || I18N.en[key] || key; }
-
-    let currentLang = localStorage.getItem("lang") || 'en';
-    applyI18n(currentLang);
-    document.getElementById('btnEN').addEventListener('click', ()=>{ currentLang='en'; localStorage.setItem('lang','en'); applyI18n('en'); });
-    document.getElementById('btnES').addEventListener('click', ()=>{ currentLang='es'; localStorage.setItem('lang','es'); applyI18n('es'); });
-  </script>
-
-  <!-- Gallery / modal / confetti -->
-  <script>
-    const hero = document.getElementById('hero');
+    /* =========================
+       GALLERY (auto-rotate + thumbs)
+    ========================= */
+    const hero   = document.getElementById('hero');
     const thumbs = Array.from(document.querySelectorAll('.thumb'));
-    const frame  = document.querySelector('.frame');
-    let current  = thumbs.findIndex(b => b.getAttribute('aria-current') === 'true');
-    if (current < 0) current = 0;
+    const sources = ["img/photo1.jpg","img/photo2.jpg","img/photo3.jpg","img/photo4.jpg"];
+    let idx = 0, timer = null, userTouched = false;
 
-    function swapTo(src, alt){
-      hero.style.opacity = 0;
-      const onload = () => { hero.style.opacity = 1; hero.removeEventListener('load', onload); };
-      hero.addEventListener('load', onload);
-      hero.src = src; hero.alt = alt;
-    }
     function show(i){
-      current = (i + thumbs.length) % thumbs.length;
-      thumbs.forEach(x => x.removeAttribute('aria-current'));
-      const btn = thumbs[current];
-      btn.setAttribute('aria-current','true');
-      const src = btn.querySelector('img').src.replace('-thumb','');
-      swapTo(src, 'Photo ' + (current+1));
+      idx = (i+sources.length)%sources.length;
+      hero.src = sources[idx];
+      hero.alt = "Photo " + (idx+1);
+      thumbs.forEach(t=>t.removeAttribute('aria-current'));
+      thumbs[idx].setAttribute('aria-current','true');
     }
-    thumbs.forEach((btn, i) => {
-      btn.addEventListener('click', () => {
-        show(i);
-        clearInterval(autoTimer);
-        setTimeout(scheduleRotate, 8000);
-      });
+    function startAuto(){
+      clearInterval(timer);
+      timer = setInterval(()=>{ if(!userTouched) show(idx+1); }, 4200);
+    }
+    thumbs.forEach((btn,i)=>{
+      btn.addEventListener('click', ()=>{ userTouched = true; show(i); });
     });
-    function next(){ show(current + 1); }
-    let autoTimer; const ROTATE_MS = 5500;
-    function scheduleRotate(){ clearInterval(autoTimer); autoTimer = setInterval(next, ROTATE_MS); }
-    scheduleRotate();
-    frame.addEventListener('mouseenter', () => clearInterval(autoTimer));
-    frame.addEventListener('mouseleave', scheduleRotate);
-    frame.addEventListener('touchstart', () => clearInterval(autoTimer), {passive:true});
-    frame.addEventListener('touchend', () => setTimeout(scheduleRotate, 8000), {passive:true});
+    hero.addEventListener('mouseenter', ()=>userTouched=true);
+    hero.addEventListener('mouseleave', ()=>userTouched=false);
+    show(0); startAuto();
 
-    // Modal
+    /* =========================
+       MODAL
+    ========================= */
     const overlay = document.getElementById('overlay');
     const openers = [document.getElementById('openModal'), document.getElementById('openModal2')];
-    const closer = document.getElementById('closeModal');
-    openers.forEach(b => b && b.addEventListener('click', () => overlay.setAttribute('open','')));
-    closer && closer.addEventListener('click', () => overlay.removeAttribute('open'));
-    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.removeAttribute('open'); });
+    const closer  = document.getElementById('closeModal');
+    openers.forEach(b=> b?.addEventListener('click', ()=> overlay.setAttribute('open','')));
+    closer?.addEventListener('click', ()=> overlay.removeAttribute('open'));
+    overlay.addEventListener('click', e=>{ if(e.target===overlay) overlay.removeAttribute('open'); });
 
-    // Confetti (respects reduced motion)
-    const confetti = document.getElementById('confetti');
-    function makeConfetti(){
-      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      const emojis = ['🎉','🎊','✨','🎈'];
-      for (let i=0; i<26; i++) {
-        const s = document.createElement('span');
-        s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-        s.style.setProperty('--x', Math.random()*100 + 'vw');
-        s.style.setProperty('--d', (6 + Math.random()*9) + 's');
-        confetti.appendChild(s);
-      }
-    }
-    window.addEventListener('load', makeConfetti);
-  </script>
+    /* =========================
+       SUPABASE (guestbook)
+    ========================= */
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  <!-- Supabase client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const SUPABASE_URL = 'https://dtxjzcufdjivbaurwgal.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0eGp6Y3VmZGppdmJhdXJ3Z2FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUzMTMyNzAsImV4cCI6MjA3MDg4OTI3MH0.YVdvxrg_WOvWvftB4vNXzyj6rt2kabGLksDr_mDVyVs';
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const statusEl = document.getElementById('status'); statusEl.dataset.state = 'loading';
+    const statusEl = document.getElementById('status');
     const cardsEl  = document.getElementById('cards');
     const form     = document.getElementById('form');
+    const submitBtn= document.getElementById('submitBtn');
 
-    function fmt(ts){ return new Date(ts).toLocaleString([], {dateStyle:'medium', timeStyle:'short'}); }
+    const fmt = ts => new Date(ts).toLocaleString([], {dateStyle:'medium', timeStyle:'short'});
+
     function sanitize(s){ return String(s||'').replace(/[<>]/g,''); }
+
     function render(list){
-      list.sort((a,b)=>b.time-a.time);
-      cardsEl.innerHTML = list.length
-        ? list.map(m => `
-            <article class="gcard">
-              <h4>${sanitize(m.name) || 'Anonymous'}</h4>
-              <div class="when">${fmt(m.time)}${m.contact ? ' • ' + sanitize(m.contact) : ''}</div>
-              <p>${sanitize(m.text)}</p>
-            </article>
-          `).join('')
-        : `<div class="gcard">${t('empty')}</div>`;
+      list.sort((a,b)=> new Date(b.time) - new Date(a.time));
+      cardsEl.innerHTML = list.length ? list.map(m => `
+        <article class="gcard">
+          <div class="ghead">
+            <div class="gname">${sanitize(m.name) || 'Anonymous'}</div>
+            <div class="gwhen">${fmt(m.time)}${m.contact ? ' • '+sanitize(m.contact):''}</div>
+          </div>
+          <div class="gtext">${sanitize(m.text)}</div>
+        </article>
+      `).join('') : `<article class="gcard">Be the first to leave a message! 🎉</article>`;
     }
 
     async function fetchMessages(){
-      const { data, error } = await sb
-        .from('messages')
-        .select('name,contact,text,created_at')
-        .order('created_at', { ascending:false })
+      const { data, error } = await supabase
+        .from(TABLE)
+        .select("*")
+        .order("time", { ascending: false })
         .limit(200);
-      if (error) throw error;
-      return data.map(r => ({ name:r.name, contact:r.contact, text:r.text, time:new Date(r.created_at).getTime() }));
+      if(error) throw error;
+      return data || [];
     }
 
-    async function postMessage(entry){
-      const { error } = await sb.from('messages').insert({
-        name: entry.name || 'Anonymous',
-        contact: entry.contact || null,
-        text: entry.text
-      });
-      if (error) throw error;
-      return true;
-    }
-
-    async function loadOnce(){
-      try {
-        statusEl.dataset.state = 'loading'; statusEl.textContent = t('status.loading');
+    async function load(){
+      try{
+        statusEl.textContent = STRINGS[lang()].loading;
         render(await fetchMessages());
-        statusEl.dataset.state = 'live'; statusEl.textContent = t('status.live');
-      } catch (e) {
-        console.error('Load failed:', e);
-        statusEl.dataset.state = 'error'; statusEl.textContent = t('status.error');
+        statusEl.textContent = STRINGS[lang()].live + " Supabase.";
+      }catch(e){
+        console.error(e);
+        statusEl.textContent = "Could not load messages.";
       }
     }
-    loadOnce();
-    setTimeout(loadOnce, 600);
+    await load();
 
-    sb.channel('public:messages')
-      .on('postgres_changes', { event:'INSERT', schema:'public', table:'messages' }, () => loadOnce())
-      .subscribe();
+    // Realtime (INSERT)
+    try{
+      supabase.channel('public:messages')
+        .on('postgres_changes', { event:'INSERT', schema:'public', table:TABLE }, async (payload)=>{
+          // Prepend new message
+          const m = payload.new;
+          const card = document.createElement('article');
+          card.className = 'gcard';
+          card.innerHTML = `
+            <div class="ghead">
+              <div class="gname">${sanitize(m.name)||'Anonymous'}</div>
+              <div class="gwhen">${fmt(m.time)}${m.contact ? ' • '+sanitize(m.contact):''}</div>
+            </div>
+            <div class="gtext">${sanitize(m.text)}</div>
+          `;
+          cardsEl.prepend(card);
+        })
+        .subscribe();
+    }catch(e){ console.warn("Realtime not available:", e); }
 
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async (e)=>{
       e.preventDefault();
-      const submitBtn = form.querySelector('button[type=submit]');
-      const originalText = submitBtn.textContent;
-
       const entry = {
         name: (form.elements['name']?.value || '').trim(),
         contact: (form.elements['contact']?.value || '').trim(),
         text: (form.elements['message']?.value || '').trim(),
-        time: Date.now(),
+        time: new Date().toISOString()
       };
-      if (!entry.text) return;
-
-      submitBtn.disabled = true;
-      submitBtn.classList.add('posting');
-      submitBtn.textContent = t('posting');
-
-      try {
-        await postMessage(entry);
-        await new Promise(r => setTimeout(r, 150));
-        await loadOnce();
+      if(!entry.text){ return; }
+      submitBtn.classList.add('loading');
+      try{
+        const { error } = await supabase.from(TABLE).insert(entry);
+        if(error) throw error;
         form.reset();
-        document.getElementById('overlay').removeAttribute('open');
+        overlay.removeAttribute('open');
         location.hash = '#guestbook';
-
-        submitBtn.classList.remove('posting');
-        submitBtn.classList.add('success');
-        submitBtn.textContent = t('posted');
-        setTimeout(() => {
-          submitBtn.classList.remove('success');
-          submitBtn.textContent = originalText;
-          submitBtn.disabled = false;
-        }, 1100);
-      } catch (e) {
-        console.error('Post failed:', e);
-        alert(t('postFail'));
-        submitBtn.classList.remove('posting');
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
+      }catch(err){
+        console.error(err);
+        alert('Sorry — could not send your message.');
+      }finally{
+        submitBtn.classList.remove('loading');
       }
     });
+
+    /* =========================
+       LANGUAGE TOGGLE
+    ========================= */
+    const btnEN = document.getElementById('btnEN');
+    const btnES = document.getElementById('btnES');
+
+    function lang(){ return localStorage.getItem('lang') || 'en'; }
+    function setLang(l){
+      localStorage.setItem('lang', l);
+      btnEN.classList.toggle('active', l==='en');
+      btnES.classList.toggle('active', l==='es');
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        el.textContent = STRINGS[l][key] || el.textContent;
+      });
+      // Also update status line if already loaded
+      if(statusEl.textContent.includes('Loading')) statusEl.textContent = STRINGS[l].loading;
+    }
+    btnEN.addEventListener('click', ()=> setLang('en'));
+    btnES.addEventListener('click', ()=> setLang('es'));
+    setLang(lang());
   </script>
 </body>
 </html>
